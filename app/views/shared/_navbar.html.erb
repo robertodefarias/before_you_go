@@ -1,30 +1,45 @@
-<nav class="navbar navbar-expand-sm navbar-light navbar-lewagon">
+<nav class="navbar navbar-expand-sm navbar-light bg-white shadow-sm">
   <div class="container-fluid">
-    <%= link_to "#", class: "navbar-brand" do %>
-      <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/logo.png" %>
+
+    <!-- LOGO -->
+    <%= link_to root_path, class: "navbar-brand fw-bold" do %>
+      <%= t("app.name") %>
     <% end %>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <!-- MOBILE BUTTON -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
       <span class="navbar-toggler-icon"></span>
     </button>
 
+    <!-- NAV CONTENT -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto">
+      <ul class="navbar-nav ms-auto align-items-center">
+
+        <!-- HOME -->
+        <li class="nav-item">
+          <%= link_to t("nav.home"), root_path, class: "nav-link" %>
+        </li>
+
+        <!-- LANGUAGE -->
+        <li class="nav-item">
+          <%= link_to "EN", url_for(locale: :en), class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "PT", url_for(locale: :"pt-BR"), class: "nav-link" %>
+        </li>
+
+        <!-- AUTH -->
         <% if user_signed_in? %>
-          <li class="nav-item active">
-            <%= link_to "Home", "#", class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Messages", "#", class: "nav-link" %>
-          </li>
           <li class="nav-item dropdown">
-          <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
-          </a>
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <%= link_to "Action", "#", class: "dropdown-item" %>
-              <%= link_to "Another action", "#", class: "dropdown-item" %>
-              <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
+            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+              <%= current_user.email %>
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-end">
+              <%= link_to "Logout",
+                destroy_user_session_path,
+                data: { turbo_method: :delete },
+                class: "dropdown-item" %>
             </div>
           </li>
         <% else %>
@@ -32,6 +47,7 @@
             <%= link_to "Login", new_user_session_path, class: "nav-link" %>
           </li>
         <% end %>
+
       </ul>
     </div>
   </div>
