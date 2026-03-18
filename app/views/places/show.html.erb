@@ -1,0 +1,44 @@
+<h1><%= @place.name %></h1>
+<p><%= @place.address %></p>
+
+<h2>Reports</h2>
+
+<% if @reports.empty? %>
+  <p>No reports yet.</p>
+<% else %>
+  <% @reports.each do |report| %>
+    <div>
+      <p><strong><%= report.category %></strong> — <%= report.status %></p>
+      <p><%= report.description %></p>
+    </div>
+  <% end %>
+<% end %>
+
+<h2>Add a report</h2>
+
+<%= form_with model: [@place, @report] do |f| %>
+  <% if @report.errors.any? %>
+    <div>
+      <% @report.errors.full_messages.each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :category %>
+    <%= f.text_field :category %>
+  </div>
+
+  <div>
+    <%= f.label :status %>
+    <%= f.select :status, ["positive", "negative"] %>
+  </div>
+
+  <div>
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </div>
+
+  <%= f.submit "Submit report" %>
+<% end %>

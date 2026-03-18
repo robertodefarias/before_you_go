@@ -1,0 +1,14 @@
+<strong><%= place.name %></strong>
+<p><%= place.address %></p>
+<p>Status: <%= place.status %></p>
+<hr>
+<% if place.reports.empty? %>
+  <p>No reports yet.</p>
+<% else %>
+  <% place.reports.each do |report| %>
+    <div>
+      <p><strong><%= report.category %></strong> — <%= report.status %></p>
+      <p><%= report.description %></p>
+    </div>
+  <% end %>
+<% end %>

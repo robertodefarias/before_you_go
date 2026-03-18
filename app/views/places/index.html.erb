@@ -1,0 +1,25 @@
+<div data-controller="map"
+     data-mapbox-key="<%= ENV['MAPBOX_API_KEY'] %>"
+     data-markers="<%= @markers.to_json %>">
+
+  <div id="map" style="width: 100%; height: 500px;"></div>
+
+  <div hidden>
+    <% @places.each do |place| %>
+      <div data-map-target="popup" data-place-id="<%= place.id %>">
+        <%= render "places/popup", place: place %>
+      </div>
+    <% end %>
+  </div>
+
+</div>
+
+<div>
+  <% @places.each do |place| %>
+    <div>
+      <h2><%= place.name %></h2>
+      <p><%= place.address %></p>
+      <span><%= place.status %></span>
+    </div>
+  <% end %>
+</div>
