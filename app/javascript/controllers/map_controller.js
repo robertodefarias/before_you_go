@@ -43,4 +43,22 @@ export default class extends Controller {
       if (markerPopup) markerPopup.marker.getPopup().addTo(this.map)
     })
   }
+
+  zoomToPlace(event) {
+  const { lat, lng } = event.detail
+
+  // Remove pin temporário anterior se existir
+  if (this.tempMarker) this.tempMarker.remove()
+
+  // Cria pin temporário azul
+  this.tempMarker = new mapboxgl.Marker({ color: "#3b82f6" })
+    .setLngLat([lng, lat])
+    .addTo(this.map)
+
+  this.map.flyTo({
+    center: [lng, lat],
+    zoom: 15,
+    speed: 1.5
+    })
+  }
 }

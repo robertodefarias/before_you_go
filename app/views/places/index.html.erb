@@ -8,7 +8,8 @@
   <div class="search-results-container"
        data-controller="map"
        data-mapbox-key="<%= ENV['MAPBOX_API_KEY'] %>"
-       data-markers="<%= @markers.to_json %>">
+       data-markers="<%= @markers.to_json %>"
+       data-action="search:placeSelected@window->map#zoomToPlace">
 
     <!-- LEFT COLUMN: PLACES LIST -->
     <div class="places-list-column">

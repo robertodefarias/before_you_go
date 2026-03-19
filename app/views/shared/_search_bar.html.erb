@@ -1,10 +1,17 @@
-<div class="search-bar">
+<div class="search-bar"
+     data-controller="search"
+     data-search-mapbox-key-value="<%= ENV['MAPBOX_API_KEY'] %>"
+     data-action="search:placeSelected->map#zoomToPlace@window">
   <%= form_with url: places_path, method: :get, local: true, class: "search-form" do |f| %>
     <div class="search-input-wrapper">
       <%= f.text_field :query,
             value: params[:query],
             placeholder: I18n.locale.to_s == "pt-BR" ? "Digite um local ou endereço..." : "Search for a place or address...",
             class: "search-input",
+            data: {
+              search_target: "input",
+              action: "input->search#search"
+            },
             aria: {
               label: I18n.locale.to_s == "pt-BR" ? "Buscar local ou endereço" : "Search for place or address"
             } %>
@@ -12,13 +19,14 @@
       <%= button_tag type: "submit", class: "search-button", aria: {
             label: I18n.locale.to_s == "pt-BR" ? "Buscar" : "Search"
           } do %>
-        <%= image_tag "icone_go_botao.png",
-              alt: "",
-              class: "search-button-icon" %>
+        <%= image_tag "icone_go_botao.png", alt: "", class: "search-button-icon" %>
         <span class="search-button-text sr-only">
           <%= I18n.locale.to_s == "pt-BR" ? "Buscar" : "Search" %>
         </span>
       <% end %>
     </div>
+
+    <!-- Sugestões em tempo real -->
+    <div data-search-target="suggestions" class="search-suggestions"></div>
   <% end %>
 </div>
