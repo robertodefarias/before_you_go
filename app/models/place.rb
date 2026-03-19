@@ -12,6 +12,14 @@ class Place < ApplicationRecord
     positive >= negative ? "positive" : "negative"
   end
 
+  def status_label
+    case status
+    when "positive" then "Safe"
+    when "negative" then "Unsafe"
+    else "Neutral"
+    end
+  end
+
   def pin_color
     case status
     when "positive" then "green"
