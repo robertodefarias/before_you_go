@@ -32,6 +32,19 @@ export default class extends Controller {
       // Retorna referência do marker e ID do lugar para uso posterior
       return { placeId: marker.id, marker: mapMarker }
     })
+
+      // Registra clique no mapa para reverse geocoding
+    this.map.on("click", (e) => this.clickMap(e))
+
+    // Muda cursor para pointer ao passar em cima de um POI
+    this.map.on("mouseenter", "poi-label", () => {
+      this.map.getCanvas().style.cursor = "pointer"
+    })
+
+    // Volta cursor padrão ao sair do POI
+    this.map.on("mouseleave", "poi-label", () => {
+      this.map.getCanvas().style.cursor = ""
+    })
   }
 
   // Voa até o lugar quando o usuário clica num card da lista
@@ -95,5 +108,29 @@ export default class extends Controller {
         speed: 1.5
       })
     })
+  }
+
+  // Busca informações do local clicado via Mapbox Reverse Geocoding
+  // Busca informações do local clicado via Mapbox Reverse Geocoding
+    clickMap(event) {
+    // Busca features do mapa no ponto clicado
+    const features = this.map.queryRenderedFeatures(event.point, {
+      layers: ["poi-label"]
+    })
+
+    // Só abre popup se clicou em um estabelecimento
+    if (!features.length) return
+
+    const feature = features[0]
+    const name = feature.properties.name || "Local sem nome"
+    const category = feature.properties.category_en || feature.properties.type || ""
+
+    new mapboxgl.Popup()
+      .setLngLat(event.lngLat)
+      .setHTML(`
+        <strong>${name}</strong>
+        ${category ? `<p><em>${category}</em></p>` : ""}
+      `)
+      .addTo(this.map)
   }
 }
