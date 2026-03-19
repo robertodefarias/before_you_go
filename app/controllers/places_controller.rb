@@ -27,4 +27,20 @@ class PlacesController < ApplicationController
     @reports = @place.reports
     @report = Report.new
   end
+
+  def create
+    @place = Place.new(place_params)
+
+    if @place.save
+      render json: { success: true, place_id: @place.id }
+    else
+      render json: { success: false, errors: @place.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def place_params
+    params.permit(:name, :address, :latitude, :longitude)
+  end
 end
