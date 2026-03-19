@@ -13,3 +13,45 @@
 
 // Map css
 @import "components/map";
+
+// Classes prontas:
+
+.auth-container {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8faff; /* Fundo leve da imagem */
+}
+
+.auth-card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 24px; /* Bordas arredondadas como no card da imagem */
+  box-shadow: 0 10px 25px rgba(45, 105, 255, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-title {
+  color: #2D69FF; /* Azul do logo/botão */
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.btn-primary-custom {
+  background-color: #2D69FF;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
+  width: 100%;
+  font-weight: bold;
+  color: white;
+  transition: 0.3s;
+}
+
+.btn-primary-custom:hover {
+  background-color: #1a51d6;
+  transform: translateY(-2px);
+}
