@@ -6,6 +6,10 @@ Rails.application.routes.draw do
 
     resources :places, only: [:index, :show] do
       resources :reports, only: [:new, :create]
+      resources :favorites, only: [:create, :destroy]
     end
+
+    # rota extra para ver todos os favoritos do usuário logado
+    get "my_favorites", to: "favorites#index"
   end
 end

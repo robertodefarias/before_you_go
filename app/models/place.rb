@@ -1,5 +1,6 @@
 class Place < ApplicationRecord
   has_many :reports
+  has_many :favorites, dependent: :destroy # se o lugar for deletado, remove dos favoritos
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
 
