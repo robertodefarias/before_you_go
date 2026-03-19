@@ -1,14 +1,19 @@
 <strong><%= place.name %></strong>
 <p><%= place.address %></p>
-<p>Status: <%= place.status %></p>
+<p>Status: <%= place.status_label %></p>
 <hr>
 <% if place.reports.empty? %>
   <p>No reports yet.</p>
 <% else %>
-  <% place.reports.each do |report| %>
+  <% place.reports.limit(2).each do |report| %>
     <div>
       <p><strong><%= report.category %></strong> — <%= report.status %></p>
       <p><%= report.description %></p>
+      <p><small><%= report.user.email %></small></p>
     </div>
   <% end %>
+  <% if place.reports.count > 2 %>
+    <p><em>+<%= place.reports.count - 2 %> more reports</em></p>
+  <% end %>
 <% end %>
+<%= link_to "Ver Detalhes", place_path(place) %>

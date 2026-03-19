@@ -36,6 +36,7 @@ Place
   has_many :reports
   geocoded_by :address  # Geocoder gem stores lat/lng
   status → "positive" | "negative" | "neutral"  (based on report majority)
+  status_label → "Safe" | "Unsafe" | "Neutral"  (human-readable label for views)
   pin_color → "green" | "red" | "gray"
 
 Report
@@ -83,4 +84,14 @@ The main interactive component is `app/javascript/controllers/map_controller.js`
 - RuboCop max line length: 120 characters (see `.rubocop.yml`)
 - RuboCop excludes: `vendor`, `bin`, `db`, `config`, `test`, `node_modules`
 - Authentication guard: use `before_action :authenticate_user!` in controllers
-- Place status logic lives in `app/models/place.rb` — drives map pin color
+- Place status logic lives in `app/models/place.rb` — drives map pin color and `status_label` for views
+- Route resource is `resources :places` (not `:lists`) — helpers are `place_path`, `places_path`, `place_reports_path`
+
+## Context
+
+Before You Go was created after a real incident of homophobic violence at a bar.
+The app is not exclusive to LGBT+ users — it's for anyone who wants to make safer
+choices about where to go out. It does NOT review service quality (food, price, etc)
+— only safety-related incidents.
+
+

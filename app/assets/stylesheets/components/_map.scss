@@ -1,3 +1,11 @@
-#map {
-  height: calc(100vh - 60px);
+// #map {
+//   height: calc(100vh - 60px);
+// }
+
+.mapboxgl-popup-content {
+  max-height: 200px;
+  overflow-y: auto;
+  min-width: 180px;
+  max-width: 260px;
 }
+

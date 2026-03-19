@@ -1,5 +1,8 @@
 <div class="search-results-page">
-  <div class="search-results-container">
+  <div class="search-results-container"
+       data-controller="map"
+       data-mapbox-key="<%= ENV['MAPBOX_API_KEY'] %>"
+       data-markers="<%= @markers.to_json %>">
 
     <!-- LEFT COLUMN: PLACES LIST -->
     <div class="places-list-column">
@@ -10,28 +13,25 @@
 
       <div class="places-list">
         <% @places.each do |place| %>
-          <%= link_to place, class: "place-card-link" do %>
-            <div class="place-card place-card--<%= place.status %>">
-              <div class="place-card-header">
-                <h2><%= place.name %></h2>
-
-                <span class="place-status"><%= place.status_label %></span>
-              </div>
-
-              <p class="place-address"><%= place.address %></p>
+          <div class="place-card place-card--<%= place.status %>"
+               data-action="click->map#flyTo"
+               data-lat="<%= place.latitude %>"
+               data-lng="<%= place.longitude %>"
+               data-place-id="<%= place.id %>">
+            <div class="place-card-header">
+              <h2><%= place.name %></h2>
+              <span class="place-status"><%= place.status_label %></span>
             </div>
-          <% end %>
+            <p class="place-address"><%= place.address %></p>
+            <%= link_to "Ver detalhes", place_path(place), class: "btn-details" %>
+          </div>
         <% end %>
       </div>
     </div>
 
     <!-- RIGHT COLUMN: MAP -->
     <div class="map-column">
-      <div
-        class="map-wrapper"
-        data-controller="map"
-        data-mapbox-key="<%= ENV['MAPBOX_API_KEY'] %>"
-        data-markers="<%= @markers.to_json %>">
+      <div class="map-wrapper">
 
         <div id="map"></div>
 

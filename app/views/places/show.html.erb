@@ -1,5 +1,8 @@
+<%= link_to " ← Back to map ", places_path %>
+
 <h1><%= @place.name %></h1>
 <p><%= @place.address %></p>
+<p>Status: <%= @place.status_label %></p>
 
 <h2>Reports</h2>
 
@@ -10,35 +13,47 @@
     <div>
       <p><strong><%= report.category %></strong> — <%= report.status %></p>
       <p><%= report.description %></p>
+      <p><small><%= report.user.email %></small></p>
     </div>
   <% end %>
 <% end %>
 
 <h2>Add a report</h2>
 
-<%= form_with model: @report, url: place_reports_path(@place) do |f| %>
-  <% if @report.errors.any? %>
+<% if user_signed_in? %>
+  <%= form_with model: @report, url: place_reports_path(@place) do |f| %>
+    <% if @report.errors.any? %>
+      <div>
+        <% @report.errors.full_messages.each do |msg| %>
+          <p><%= msg %></p>
+        <% end %>
+      </div>
+    <% end %>
+
     <div>
-      <% @report.errors.full_messages.each do |msg| %>
-        <p><%= msg %></p>
-      <% end %>
+      <%= f.label :category %>
+      <%= f.select :category, [
+        "Ambiente",
+        "Seguranca",
+        "Preconceito",
+        "Assédio",
+        "Violência",
+        "Outros"
+        ] %>
     </div>
+
+    <div>
+      <%= f.label :status %>
+      <%= f.select :status, ["positive", "negative"] %>
+    </div>
+
+    <div>
+      <%= f.label :description %>
+      <%= f.text_area :description %>
+    </div>
+
+    <%= f.submit "Submit report" %>
   <% end %>
-
-  <div>
-    <%= f.label :category %>
-    <%= f.text_field :category %>
-  </div>
-
-  <div>
-    <%= f.label :status %>
-    <%= f.select :status, ["positive", "negative"] %>
-  </div>
-
-  <div>
-    <%= f.label :description %>
-    <%= f.text_area :description %>
-  </div>
-
-  <%= f.submit "Submit report" %>
+<% else %>
+  <p><%= link_to "Sign in", new_user_session_path %> to add a report.</p>
 <% end %>

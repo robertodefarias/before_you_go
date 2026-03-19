@@ -17,7 +17,7 @@ class PlacesController < ApplicationController
 
   def show
     @place = Place.find(params[:id])
-    @reports = @place.reports
+    @reports = @place.reports.includes(:user)
     @report = Report.new
   end
 end
