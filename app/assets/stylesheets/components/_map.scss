@@ -1,4 +1,8 @@
 
+.mapboxgl-marker {
+  cursor: pointer;
+}
+
 .mapboxgl-popup-content {
   max-height: 200px;
   overflow-y: auto;
