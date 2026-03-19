@@ -1,54 +1,49 @@
-<nav class="navbar navbar-expand-sm navbar-light bg-white shadow-sm">
-  <div class="container-fluid">
+<nav class="main-navbar">
+  <div class="container">
+    <div class="navbar-content">
 
-    <!-- LOGO -->
-    <%= link_to root_path, class: "navbar-brand fw-bold" do %>
-      <%= t("app.name") %>
-    <% end %>
+      <!-- LEFT: BRAND -->
+      <div class="navbar-left">
+        <%= link_to root_path, class: "navbar-brand" do %>
+          <%= image_tag "before_you_go.png", class: "navbar-logo" %>
+        <% end %>
+      </div>
 
-    <!-- MOBILE BUTTON -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- NAV CONTENT -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ms-auto align-items-center">
+      <!-- RIGHT: NAV LINKS -->
+      <div class="navbar-right">
 
         <!-- HOME -->
-        <li class="nav-item">
-          <%= link_to t("nav.home"), root_path, class: "nav-link" %>
-        </li>
+        <%= link_to t("nav.home"), root_path, class: "navbar-link" %>
 
         <!-- LANGUAGE -->
-        <li class="nav-item">
-          <%= link_to "EN", url_for(locale: :en), class: "nav-link" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "PT", url_for(locale: :"pt-BR"), class: "nav-link" %>
-        </li>
+        <%= link_to "EN", url_for(locale: :en), class: "navbar-link" %>
+        <%= link_to "PT", url_for(locale: :"pt-BR"), class: "navbar-link" %>
 
         <!-- AUTH -->
         <% if user_signed_in? %>
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-              <%= current_user.email %>
-            </a>
 
-            <div class="dropdown-menu dropdown-menu-end">
+          <div class="navbar-dropdown">
+            <span class="navbar-link navbar-link-outline">
+              <%= current_user.email %>
+            </span>
+
+            <div class="dropdown-menu-custom">
               <%= link_to "Logout",
                 destroy_user_session_path,
                 data: { turbo_method: :delete },
-                class: "dropdown-item" %>
+                class: "dropdown-item-custom" %>
             </div>
-          </li>
+          </div>
+
         <% else %>
-          <li class="nav-item">
-            <%= link_to "Login", new_user_session_path, class: "nav-link" %>
-          </li>
+
+          <%= link_to "Login", new_user_session_path, class: "navbar-link navbar-link-outline" %>
+
+          <%= link_to "Get started", new_user_registration_path, class: "navbar-link navbar-link-primary" %>
+
         <% end %>
 
-      </ul>
+      </div>
     </div>
   </div>
 </nav>

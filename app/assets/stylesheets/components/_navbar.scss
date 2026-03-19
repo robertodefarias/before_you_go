@@ -1,12 +1,143 @@
-.navbar-lewagon {
+.main-navbar {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #edf1f7;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-content {
+  min-height: 78px;
+  display: flex;
+  align-items: center;
   justify-content: space-between;
+  gap: 24px;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #3366ff 0%, #12b886 100%);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+}
+
+.brand-name {
+  font-size: 18px;
+  font-weight: 800;
+  color: #101828;
+  letter-spacing: -0.3px;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: #344054;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 12px;
+  transition: 0.2s ease;
+}
+
+.navbar-link:hover {
+  background: #f2f4f7;
+  color: #101828;
+}
+
+.navbar-link-outline {
+  border: 1px solid #d0d5dd;
+  background: #ffffff;
+}
+
+.navbar-link-outline:hover {
+  border-color: #98a2b3;
+}
+
+.navbar-link-primary {
+  background: #3366ff;
+  color: #ffffff;
+}
+
+.navbar-link-primary:hover {
+  background: #2447d5;
+  color: #ffffff;
+}
+
+/* Dropdown */
+.navbar-dropdown {
+  position: relative;
+}
+
+.dropdown-menu-custom {
+  position: absolute;
+  right: 0;
+  top: 110%;
   background: white;
+  border: 1px solid #e6eaf2;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(16, 24, 40, 0.1);
+  padding: 8px;
+  display: none;
 }
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
+.navbar-dropdown:hover .dropdown-menu-custom {
+  display: block;
 }
 
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+.dropdown-item-custom {
+  display: block;
+  padding: 10px 14px;
+  text-decoration: none;
+  color: #344054;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.dropdown-item-custom:hover {
+  background: #f2f4f7;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .navbar-content {
+    flex-direction: column;
+    justify-content: center;
+    padding: 14px 0;
+  }
+
+  .navbar-right {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+.navbar-logo {
+  height: 42px;
+  width: auto;
+  object-fit: contain;
 }

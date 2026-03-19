@@ -16,7 +16,7 @@
 
 <h2>Add a report</h2>
 
-<%= form_with model: [@place, @report] do |f| %>
+<%= form_with model: @report, url: list_reports_path(@place) do |f| %>
   <% if @report.errors.any? %>
     <div>
       <% @report.errors.full_messages.each do |msg| %>

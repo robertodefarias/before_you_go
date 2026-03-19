@@ -1,25 +1,58 @@
-<div data-controller="map"
-     data-mapbox-key="<%= ENV['MAPBOX_API_KEY'] %>"
-     data-markers="<%= @markers.to_json %>">
+<div class="search-results-page">
+  <div class="search-results-container">
 
-  <div id="map" style="width: 100%; height: 500px;"></div>
-
-  <div hidden>
-    <% @places.each do |place| %>
-      <div data-map-target="popup" data-place-id="<%= place.id %>">
-        <%= render "places/popup", place: place %>
+    <!-- LEFT COLUMN: PLACES LIST -->
+    <div class="places-list-column">
+      <div class="places-list-header">
+        <h1>Places</h1>
+        <p>Check recent reports before you go.</p>
       </div>
-    <% end %>
-  </div>
 
-</div>
+      <div class="places-list">
+        <% @places.each do |place| %>
+          <%= link_to list_path(place), class: "place-card-link" do %>
+            <div class="place-card place-card--<%= place.status %>">
+              <div class="place-card-header">
+                <h2><%= place.name %></h2>
 
-<div>
-  <% @places.each do |place| %>
-    <div>
-      <h2><%= place.name %></h2>
-      <p><%= place.address %></p>
-      <span><%= place.status %></span>
+                <span class="place-status">
+                  <% case place.status %>
+                  <% when "positive" %>
+                    Safe
+                  <% when "negative" %>
+                    Unsafe
+                  <% else %>
+                    Neutral
+                  <% end %>
+                </span>
+              </div>
+
+              <p class="place-address"><%= place.address %></p>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
     </div>
-  <% end %>
+
+    <!-- RIGHT COLUMN: MAP -->
+    <div class="map-column">
+      <div
+        class="map-wrapper"
+        data-controller="map"
+        data-mapbox-key="<%= ENV['MAPBOX_API_KEY'] %>"
+        data-markers="<%= @markers.to_json %>">
+
+        <div id="map"></div>
+
+        <div hidden>
+          <% @places.each do |place| %>
+            <div data-map-target="popup" data-place-id="<%= place.id %>">
+              <%= render "places/popup", place: place %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
