@@ -1,31 +1,76 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
   hello: "Hello world"
+
+  nav:
+    home: "Home"
+
+  home:
+    hero:
+      badge: "Community-powered local safety"
+      title_html: "Know before<br><span>you go</span>"
+      subtitle: "Search places in Brazil, review recent reports, and decide with more confidence before heading out."
+      search_helper: "Start with a place, venue, or address to see what the community is reporting."
+      primary_cta: "Explore places"
+      secondary_cta: "How it works"
+      stats:
+        community:
+          title: "Community insights"
+          text: "Reports shared by people who know the area."
+        instant:
+          title: "Fast context"
+          text: "See the status of a place in a few seconds."
+        reporting:
+          title: "Simple reporting"
+          text: "Contribute updates when something changes."
+      panel:
+        positive: "Safe"
+        neutral: "Attention"
+        negative: "Avoid"
+        overline: "Quick read"
+        title: "Three clear statuses for faster decisions"
+        text: "Before You Go turns recent community reports into a simpler signal, so you can quickly understand whether a place feels safe, uncertain, or risky."
+        metrics:
+          statuses: "easy-to-read statuses"
+          access: "access whenever you need it"
+          community: "community-based information"
+
+    trust:
+      safety: "Safety-oriented information"
+      location: "Search by place or address"
+      community: "Built with community input"
+
+    how_it_works:
+      eyebrow: "How it works"
+      title: "A clearer way to check a place before leaving"
+      subtitle: "Search, review the current status, and contribute updates so the next person has better context too."
+      cards:
+        search:
+          title: "Search the location"
+          text: "Look up a place, address, or point of interest and open its details."
+        status:
+          title: "Understand the current signal"
+          text: "Review the place status and recent community context before you go."
+        report:
+          title: "Share what changed"
+          text: "Submit a report to help others make better decisions later."
+
+    value:
+      eyebrow: "Why it matters"
+      title: "Less guesswork, more useful context"
+      subtitle: "The goal is not perfect prediction. It is giving people a practical way to evaluate a place using recent shared experiences."
+      items:
+        fast:
+          title: "Fast to use"
+          text: "Get a quick read without digging through scattered information."
+        clear:
+          title: "Easy to understand"
+          text: "A simple structure makes the current situation easier to interpret."
+        shared:
+          title: "Improves with the community"
+          text: "The more people contribute, the more useful the platform becomes."
+
+    bottom_cta:
+      eyebrow: "Start now"
+      title: "Check the place before you leave"
+      subtitle: "Use the search to explore locations and review what people are reporting."
+      primary: "Search places"

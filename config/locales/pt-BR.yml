@@ -1,0 +1,74 @@
+pt-BR:
+  nav:
+    home: "Home"
+
+  home:
+    hero:
+      badge: "Seguranca local com apoio da comunidade"
+      title_html: "Saiba antes<br><span>de ir</span>"
+      subtitle: "Pesquise lugares no Brasil, veja relatos recentes e tome decisoes com mais confianca antes de sair."
+      search_helper: "Comece por um lugar, estabelecimento ou endereco para ver o que a comunidade esta reportando."
+      primary_cta: "Explorar lugares"
+      secondary_cta: "Como funciona"
+      stats:
+        community:
+          title: "Visao da comunidade"
+          text: "Relatos compartilhados por pessoas que conhecem a area."
+        instant:
+          title: "Contexto rapido"
+          text: "Veja o status de um lugar em poucos segundos."
+        reporting:
+          title: "Relato simples"
+          text: "Contribua com atualizacoes quando algo mudar."
+      panel:
+        positive: "Seguro"
+        neutral: "Atencao"
+        negative: "Evitar"
+        overline: "Leitura rapida"
+        title: "Tres status claros para decidir mais rapido"
+        text: "O Before You Go transforma relatos recentes da comunidade em um sinal mais simples, para voce entender rapidamente se um lugar parece seguro, incerto ou arriscado."
+        metrics:
+          statuses: "status faceis de entender"
+          access: "acesso quando precisar"
+          community: "informacao baseada na comunidade"
+
+    trust:
+      safety: "Informacao orientada a seguranca"
+      location: "Busca por lugar ou endereco"
+      community: "Construido com a comunidade"
+
+    how_it_works:
+      eyebrow: "Como funciona"
+      title: "Uma forma mais clara de verificar um lugar antes de sair"
+      subtitle: "Pesquise, veja o status atual e contribua com atualizacoes para que a proxima pessoa tambem tenha um contexto melhor."
+      cards:
+        search:
+          title: "Pesquise o local"
+          text: "Busque um lugar, endereco ou ponto de interesse e abra os detalhes."
+        status:
+          title: "Entenda o sinal atual"
+          text: "Veja o status do lugar e o contexto recente da comunidade antes de ir."
+        report:
+          title: "Compartilhe o que mudou"
+          text: "Envie um relato para ajudar outras pessoas a decidirem melhor depois."
+
+    value:
+      eyebrow: "Por que importa"
+      title: "Menos achismo, mais contexto util"
+      subtitle: "A ideia nao e prever tudo com perfeicao. E dar as pessoas uma forma pratica de avaliar um lugar usando experiencias recentes compartilhadas."
+      items:
+        fast:
+          title: "Rapido de usar"
+          text: "Tenha uma leitura rapida sem procurar informacoes espalhadas."
+        clear:
+          title: "Facil de entender"
+          text: "Uma estrutura simples torna a situacao atual mais facil de interpretar."
+        shared:
+          title: "Melhora com a comunidade"
+          text: "Quanto mais pessoas contribuem, mais util a plataforma fica."
+
+    bottom_cta:
+      eyebrow: "Comece agora"
+      title: "Verifique o lugar antes de sair"
+      subtitle: "Use a busca para explorar locais e revisar o que as pessoas estao reportando."
+      primary: "Buscar lugares"
