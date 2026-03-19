@@ -1,94 +1,200 @@
 <div class="home-page">
   <section class="hero-section">
     <div class="container">
-      <div class="hero-content">
-        <div class="hero-badge">
-          <span>Urban safety insights for nightlife and public places</span>
-        </div>
+      <div class="hero-shell">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span><%= t("home.hero.badge") %></span>
+          </div>
 
-        <h1 class="hero-title">
-          Know where you’re going
-          <span>before you go</span>
-        </h1>
+          <h1 class="hero-title">
+            <%= t("home.hero.title_html") %>
+          </h1>
 
-        <p class="hero-subtitle">
-          Search for bars, restaurants, clubs and venues. Check community safety reports
-          about harassment, violence, prejudice and other incidents before deciding to go.
-        </p>
-
-        <div class="hero-search-card">
-          <form action="#" method="get" class="hero-search-form">
-            <div class="search-input-group">
-              <span class="search-icon">📍</span>
-              <input
-                type="text"
-                name="query"
-                class="hero-search-input"
-                placeholder="Search by place name or address"
-              >
-              <button type="submit" class="hero-search-button">
-                Search
-              </button>
-            </div>
-          </form>
-
-          <p class="search-helper-text">
-            Example: “Tokyo Club”, “Paulista Avenue”, “Bar in Pinheiros”
+          <p class="hero-subtitle">
+            <%= t("home.hero.subtitle") %>
           </p>
+
+          <div class="hero-actions">
+            <%= form_with url: places_path, method: :get, local: true, class: "hero-search-form" do %>
+              <div class="search-input-group">
+                <span class="search-icon">📍</span>
+
+                <%= text_field_tag :query,
+                                   params[:query],
+                                   class: "hero-search-input",
+                                   placeholder: t("home.hero.search_placeholder") %>
+
+                <%= submit_tag t("home.hero.search_button"), class: "hero-search-button" %>
+              </div>
+            <% end %>
+
+            <p class="search-helper-text">
+              <%= t("home.hero.search_helper") %>
+            </p>
+
+            <div class="hero-cta-row">
+              <%= link_to t("home.hero.primary_cta"), places_path, class: "hero-primary-cta" %>
+              <%= link_to t("home.hero.secondary_cta"), "#how-it-works", class: "hero-secondary-cta" %>
+            </div>
+          </div>
+
+          <div class="hero-stats">
+            <div class="mini-stat">
+              <strong><%= t("home.hero.stats.community.title") %></strong>
+              <span><%= t("home.hero.stats.community.text") %></span>
+            </div>
+
+            <div class="mini-stat">
+              <strong><%= t("home.hero.stats.instant.title") %></strong>
+              <span><%= t("home.hero.stats.instant.text") %></span>
+            </div>
+
+            <div class="mini-stat">
+              <strong><%= t("home.hero.stats.reporting.title") %></strong>
+              <span><%= t("home.hero.stats.reporting.text") %></span>
+            </div>
+          </div>
         </div>
 
-        <div class="hero-stats">
-          <div class="mini-stat">
-            <strong>Community-powered</strong>
-            <span>Real reports from real people</span>
-          </div>
+        <div class="hero-panel">
+          <div class="hero-panel-card">
+            <div class="hero-panel-top">
+              <span class="panel-label panel-label-positive"><%= t("home.hero.panel.positive") %></span>
+              <span class="panel-label panel-label-neutral"><%= t("home.hero.panel.neutral") %></span>
+              <span class="panel-label panel-label-negative"><%= t("home.hero.panel.negative") %></span>
+            </div>
 
-          <div class="mini-stat">
-            <strong>Fast decision</strong>
-            <span>See the safety status instantly</span>
-          </div>
+            <div class="hero-panel-body">
+              <p class="panel-overline"><%= t("home.hero.panel.overline") %></p>
+              <h3><%= t("home.hero.panel.title") %></h3>
+              <p>
+                <%= t("home.hero.panel.text") %>
+              </p>
+            </div>
 
-          <div class="mini-stat">
-            <strong>Anonymous reporting</strong>
-            <span>Safer sharing for sensitive situations</span>
+            <div class="hero-panel-metrics">
+              <div class="panel-metric">
+                <strong>3</strong>
+                <span><%= t("home.hero.panel.metrics.statuses") %></span>
+              </div>
+
+              <div class="panel-metric">
+                <strong>24/7</strong>
+                <span><%= t("home.hero.panel.metrics.access") %></span>
+              </div>
+
+              <div class="panel-metric">
+                <strong>100%</strong>
+                <span><%= t("home.hero.panel.metrics.community") %></span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="home-info-section">
+  <section class="trust-strip-section">
+    <div class="container">
+      <div class="trust-strip">
+        <div class="trust-strip-item">
+          <span class="trust-strip-icon">🛡️</span>
+          <span><%= t("home.trust.safety") %></span>
+        </div>
+
+        <div class="trust-strip-item">
+          <span class="trust-strip-icon">📍</span>
+          <span><%= t("home.trust.location") %></span>
+        </div>
+
+        <div class="trust-strip-item">
+          <span class="trust-strip-icon">🗣️</span>
+          <span><%= t("home.trust.community") %></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-info-section" id="how-it-works">
     <div class="container">
       <div class="section-heading">
-        <h2>How it works</h2>
-        <p>
-          A simple way to help people make safer decisions about where they go.
-        </p>
+        <span class="section-eyebrow"><%= t("home.how_it_works.eyebrow") %></span>
+        <h2><%= t("home.how_it_works.title") %></h2>
+        <p><%= t("home.how_it_works.subtitle") %></p>
       </div>
 
       <div class="info-cards-grid">
-        <div class="info-card">
+        <article class="info-card">
           <div class="info-card-icon">🔎</div>
-          <h3>Search a place</h3>
-          <p>
-            Type the name of a venue, bar, restaurant or address and quickly check what people have reported.
-          </p>
-        </div>
+          <h3><%= t("home.how_it_works.cards.search.title") %></h3>
+          <p><%= t("home.how_it_works.cards.search.text") %></p>
+        </article>
 
-        <div class="info-card">
+        <article class="info-card">
           <div class="info-card-icon">🛡️</div>
-          <h3>Understand the safety status</h3>
-          <p>
-            View whether the place is currently perceived as positive, negative or neutral based on community reports.
-          </p>
+          <h3><%= t("home.how_it_works.cards.status.title") %></h3>
+          <p><%= t("home.how_it_works.cards.status.text") %></p>
+        </article>
+
+        <article class="info-card">
+          <div class="info-card-icon">✍️</div>
+          <h3><%= t("home.how_it_works.cards.report.title") %></h3>
+          <p><%= t("home.how_it_works.cards.report.text") %></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-value-section">
+    <div class="container">
+      <div class="value-grid">
+        <div class="value-copy">
+          <span class="section-eyebrow"><%= t("home.value.eyebrow") %></span>
+          <h2><%= t("home.value.title") %></h2>
+          <p><%= t("home.value.subtitle") %></p>
         </div>
 
-        <div class="info-card">
-          <div class="info-card-icon">✍️</div>
-          <h3>Leave your report</h3>
-          <p>
-            After visiting, contribute with your experience and help others make better and safer choices.
-          </p>
+        <div class="value-list">
+          <div class="value-item">
+            <span class="value-item-icon">⚡</span>
+            <div>
+              <h3><%= t("home.value.items.fast.title") %></h3>
+              <p><%= t("home.value.items.fast.text") %></p>
+            </div>
+          </div>
+
+          <div class="value-item">
+            <span class="value-item-icon">🧠</span>
+            <div>
+              <h3><%= t("home.value.items.clear.title") %></h3>
+              <p><%= t("home.value.items.clear.text") %></p>
+            </div>
+          </div>
+
+          <div class="value-item">
+            <span class="value-item-icon">🤝</span>
+            <div>
+              <h3><%= t("home.value.items.shared.title") %></h3>
+              <p><%= t("home.value.items.shared.text") %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-bottom-cta">
+    <div class="container">
+      <div class="bottom-cta-card">
+        <div class="bottom-cta-copy">
+          <span class="section-eyebrow"><%= t("home.bottom_cta.eyebrow") %></span>
+          <h2><%= t("home.bottom_cta.title") %></h2>
+          <p><%= t("home.bottom_cta.subtitle") %></p>
+        </div>
+
+        <div class="bottom-cta-actions">
+          <%= link_to t("home.bottom_cta.primary"), places_path, class: "bottom-cta-primary" %>
         </div>
       </div>
     </div>
