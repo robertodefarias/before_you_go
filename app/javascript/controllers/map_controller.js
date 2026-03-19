@@ -10,9 +10,9 @@ export default class extends Controller {
 
     const map = new mapboxgl.Map({
       container: this.element.querySelector("#map"),
-      style: "mapbox://styles/mapbox/streets-v12",
+      style: 'mapbox://styles/mapbox/streets-v12',
       center: markers.length > 0 ? [markers[0].lng, markers[0].lat] : [-46.63, -23.55],
-      zoom: 12
+      zoom: 10
     })
 
     markers.forEach(marker => {
