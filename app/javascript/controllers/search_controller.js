@@ -9,35 +9,11 @@ export default class extends Controller {
     this.abortController = null
     this.features = []
     this.activeIndex = -1
-
-    this.handleDocumentClick = this.handleDocumentClick.bind(this)
-    document.addEventListener("click", this.handleDocumentClick)
-
-    this.suggestionsTarget.addEventListener("mouseover", (e) => {
-      const btn = e.target.closest("[data-suggestion-index]")
-      if (!btn) return
-      const index = parseInt(btn.dataset.suggestionIndex)
-      if (index === this.activeIndex) return
-      this.activeIndex = index
-      this.suggestionsTarget.querySelectorAll(".suggestion-item").forEach((el, i) => {
-        el.classList.toggle("suggestion-item-active", i === index)
-        el.setAttribute("aria-selected", i === index ? "true" : "false")
-      })
-    })
-
-    this.suggestionsTarget.addEventListener("mousedown", (e) => {
-      const btn = e.target.closest("[data-suggestion-index]")
-      if (!btn) return
-      e.preventDefault()
-      const index = parseInt(btn.dataset.suggestionIndex)
-      this.selectPlace(this.features[index])
-    })
   }
 
   disconnect() {
     clearTimeout(this.timeout)
     this.abortOngoingRequest()
-    document.removeEventListener("click", this.handleDocumentClick)
   }
 
   search() {
@@ -174,6 +150,26 @@ export default class extends Controller {
 
   abortOngoingRequest() {
     if (this.abortController) this.abortController.abort()
+  }
+
+  handleSuggestionMouseover(e) {
+    const btn = e.target.closest("[data-suggestion-index]")
+    if (!btn) return
+    const index = parseInt(btn.dataset.suggestionIndex)
+    if (index === this.activeIndex) return
+    this.activeIndex = index
+    this.suggestionsTarget.querySelectorAll(".suggestion-item").forEach((el, i) => {
+      el.classList.toggle("suggestion-item-active", i === index)
+      el.setAttribute("aria-selected", i === index ? "true" : "false")
+    })
+  }
+
+  handleSuggestionMousedown(e) {
+    const btn = e.target.closest("[data-suggestion-index]")
+    if (!btn) return
+    e.preventDefault()
+    const index = parseInt(btn.dataset.suggestionIndex)
+    this.selectPlace(this.features[index])
   }
 
   handleDocumentClick(event) {

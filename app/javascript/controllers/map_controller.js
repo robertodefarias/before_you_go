@@ -162,7 +162,8 @@ export default class extends Controller {
             <strong>${this.escape(name)}</strong>
             ${category ? `<p><em>${this.escape(category)}</em></p>` : ""}
             <p>${this.escape(address)}</p>
-            <button
+            <a
+              href="#"
               class="btn-add-place"
               data-action="click->map#addPlace"
               data-name="${this.escape(name)}"
@@ -170,7 +171,7 @@ export default class extends Controller {
               data-lat="${lat}"
               data-lng="${lng}">
               + Adicionar este local
-            </button>
+            </a>
           `)
           .addTo(this.map)
       })
@@ -179,6 +180,7 @@ export default class extends Controller {
 
   // Cria o place no banco e redireciona para a página do lugar
   addPlace(event) {
+    event.preventDefault()
     const { name, address, lat, lng } = event.currentTarget.dataset
     const locale = document.documentElement.lang || "pt-BR"
 
