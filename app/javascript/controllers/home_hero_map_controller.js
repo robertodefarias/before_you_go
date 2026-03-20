@@ -1,10 +1,9 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["map", "card"]
+  static targets = ["map", "card", "searchInput"]
 
   connect() {
-    this.searchInput = this.element.querySelector(".search-input")
     this.defaultCenter = [-14.235, -51.9253]
     this.defaultZoom = 4
     this.map = null
@@ -14,16 +13,9 @@ export default class extends Controller {
     this.userLocation = null
 
     this.loadMap()
-    this.bindSearchEvents()
   }
 
   disconnect() {
-    if (this.searchInput) {
-      this.searchInput.removeEventListener("input", this.handleInput)
-      this.searchInput.removeEventListener("focus", this.handleFocus)
-      this.searchInput.removeEventListener("blur", this.handleBlur)
-    }
-
     if (this.map) {
       this.map.remove()
       this.map = null
@@ -114,37 +106,29 @@ export default class extends Controller {
     })
   }
 
-  bindSearchEvents() {
-    if (!this.searchInput) return
+  handleInput() {
+    const hasText = this.searchInputTarget.value.trim().length > 0
 
-    this.handleInput = () => {
-      const hasText = this.searchInput.value.trim().length > 0
-
-      if (hasText) {
-        this.element.classList.add("home-page--searching")
-        this.focusMap()
-      } else {
-        this.element.classList.remove("home-page--searching")
-        this.resetMap()
-      }
+    if (hasText) {
+      this.element.classList.add("home-page--searching")
+      this.focusMap()
+    } else {
+      this.element.classList.remove("home-page--searching")
+      this.resetMap()
     }
+  }
 
-    this.handleFocus = () => {
-      if (this.searchInput.value.trim().length > 0) {
-        this.element.classList.add("home-page--searching")
-      }
+  handleFocus() {
+    if (this.searchInputTarget.value.trim().length > 0) {
+      this.element.classList.add("home-page--searching")
     }
+  }
 
-    this.handleBlur = () => {
-      if (this.searchInput.value.trim().length === 0) {
-        this.element.classList.remove("home-page--searching")
-        this.resetMap()
-      }
+  handleBlur() {
+    if (this.searchInputTarget.value.trim().length === 0) {
+      this.element.classList.remove("home-page--searching")
+      this.resetMap()
     }
-
-    this.searchInput.addEventListener("input", this.handleInput)
-    this.searchInput.addEventListener("focus", this.handleFocus)
-    this.searchInput.addEventListener("blur", this.handleBlur)
   }
 
   focusMap() {

@@ -4,13 +4,7 @@ export default class extends Controller {
   static targets = ["panel", "toggle"]
 
   connect() {
-    this.handleResize = this.handleResize.bind(this)
-    window.addEventListener("resize", this.handleResize)
     this.handleResize()
-  }
-
-  disconnect() {
-    window.removeEventListener("resize", this.handleResize)
   }
 
   toggle() {
