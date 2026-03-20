@@ -26,14 +26,14 @@ export default class extends Controller {
       // Cria o pin colorido com popup e adiciona ao mapa
       const mapMarker = new mapboxgl.Marker({ color: marker.pin_color })
         .setLngLat([marker.lng, marker.lat])
-        .setPopup(new mapboxgl.Popup().setHTML(popupEl.innerHTML))
+        .setPopup(popupEl ? new mapboxgl.Popup().setHTML(popupEl.innerHTML) : null)
         .addTo(this.map)
 
       // Retorna referência do marker e ID do lugar para uso posterior
       return { placeId: marker.id, marker: mapMarker }
     })
 
-      // Registra clique no mapa para reverse geocoding
+    // Registra clique no mapa para reverse geocoding
     this.map.on("click", (e) => this.clickMap(e))
 
     // Muda cursor para pointer ao passar em cima de um POI
@@ -110,27 +110,73 @@ export default class extends Controller {
     })
   }
 
-  // Busca informações do local clicado via Mapbox Reverse Geocoding
-  // Busca informações do local clicado via Mapbox Reverse Geocoding
-    clickMap(event) {
-    // Busca features do mapa no ponto clicado
+  // Escapa caracteres HTML para evitar XSS em conteúdo inserido no popup
+  escape(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+  }
+
+  // Busca informações do local clicado e exibe popup com botão de adicionar
+  clickMap(event) {
     const features = this.map.queryRenderedFeatures(event.point, {
       layers: ["poi-label"]
     })
 
-    // Só abre popup se clicou em um estabelecimento
     if (!features.length) return
 
     const feature = features[0]
     const name = feature.properties.name || "Local sem nome"
-    const category = feature.properties.category_en || feature.properties.type || ""
+    const category = feature.properties.category_en || ""
+    const lng = event.lngLat.lng
+    const lat = event.lngLat.lat
 
-    new mapboxgl.Popup()
-      .setLngLat(event.lngLat)
-      .setHTML(`
-        <strong>${name}</strong>
-        ${category ? `<p><em>${category}</em></p>` : ""}
-      `)
-      .addTo(this.map)
+    // Busca endereço via reverse geocoding
+    fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${mapboxgl.accessToken}&language=pt&types=address`)
+      .then(res => res.json())
+      .then(data => {
+        const address = data.features[0]?.place_name || ""
+
+        new mapboxgl.Popup()
+          .setLngLat(event.lngLat)
+          .setHTML(`
+            <strong>${this.escape(name)}</strong>
+            ${category ? `<p><em>${this.escape(category)}</em></p>` : ""}
+            <p>${this.escape(address)}</p>
+            <button
+              class="btn-add-place"
+              data-action="click->map#addPlace"
+              data-name="${this.escape(name)}"
+              data-address="${this.escape(address)}"
+              data-lat="${lat}"
+              data-lng="${lng}">
+              + Adicionar este local
+            </button>
+          `)
+          .addTo(this.map)
+      })
+      .catch(err => console.error("Erro no reverse geocoding:", err))
+  }
+
+  // Cria o place no banco e redireciona para a página do lugar
+  addPlace(event) {
+    const { name, address, lat, lng } = event.currentTarget.dataset
+    const locale = document.documentElement.lang || "pt-BR"
+
+    fetch(`/${locale}/places`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
+      },
+      body: JSON.stringify({ name, address, latitude: lat, longitude: lng })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) window.location.href = `/${locale}/places/${data.place_id}`
+    })
+    .catch(err => console.error("Erro ao adicionar local:", err))
   }
 }
