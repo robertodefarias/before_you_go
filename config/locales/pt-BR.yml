@@ -1,17 +1,17 @@
 pt-BR:
   nav:
-    home: "Home"
+    home: "Início"
 
   auth:
     shared:
-      eyebrow: "Acesso a conta"
+      eyebrow: "Acesso à conta"
       side_title: "Tenha mais contexto antes de sair"
-      side_text: "Entre para compartilhar relatos, contribuir com contexto recente e manter a leitura dos lugares mais util para todo mundo."
+      side_text: "Entre para compartilhar relatos, contribuir com contexto recente e manter a leitura dos lugares mais útil para todo mundo."
       benefit_one_title: "Guarde seu contexto"
       benefit_one_text: "Acompanhe lugares, revisite locais e decida com base em sinais mais recentes."
       benefit_two_title: "Ajude a comunidade"
-      benefit_two_text: "Envie relatos quando algo mudar para que a proxima pessoa tenha mais contexto."
-      benefit_three_title: "Saia com mais confianca"
+      benefit_two_text: "Envie relatos quando algo mudar para que a próxima pessoa tenha mais contexto."
+      benefit_three_title: "Saia com mais confiança"
       benefit_three_text: "Use sinais mais claros e relatos recentes antes de ir."
     login:
       title: "Bem-vindo de volta"
@@ -19,62 +19,62 @@ pt-BR:
       submit: "Entrar"
     signup:
       title: "Crie sua conta"
-      subtitle: "Junte-se a comunidade para compartilhar relatos e decidir melhor antes de sair."
+      subtitle: "Junte-se à comunidade para compartilhar relatos e decidir melhor antes de sair."
       submit: "Criar conta"
     forgot_password:
       title: "Redefina sua senha"
-      subtitle: "Digite seu email e enviaremos as instrucoes de recuperacao."
-      submit: "Enviar instrucoes"
+      subtitle: "Digite seu e-mail e enviaremos as instruções de recuperação."
+      submit: "Enviar instruções"
     links:
       login: "Entrar"
       signup: "Criar conta"
       forgot_password: "Esqueceu sua senha?"
-      confirmation: "Nao recebeu as instrucoes de confirmacao?"
-      unlock: "Nao recebeu as instrucoes de desbloqueio?"
+      confirmation: "Não recebeu as instruções de confirmação?"
+      unlock: "Não recebeu as instruções de desbloqueio?"
 
   home:
     hero:
-      badge: "Seguranca local com apoio da comunidade"
+      badge: "Segurança local com apoio da comunidade"
       title_html: "Saiba antes<br><span>de ir</span>"
-      subtitle: "Pesquise lugares no Brasil, veja relatos recentes e tome decisoes com mais confianca antes de sair."
-      search_helper: "Comece por um lugar, estabelecimento ou endereco para ver o que a comunidade esta reportando."
+      subtitle: "Pesquise lugares no Brasil, veja relatos recentes e tome decisões com mais confiança antes de sair."
+      search_helper: "Comece por um lugar, estabelecimento ou endereço para ver o que a comunidade está reportando."
       primary_cta: "Explorar lugares"
       secondary_cta: "Como funciona"
       stats:
         community:
-          title: "Visao da comunidade"
-          text: "Relatos compartilhados por pessoas que conhecem a area."
+          title: "Visão da comunidade"
+          text: "Relatos compartilhados por pessoas que conhecem a área."
         instant:
-          title: "Contexto rapido"
+          title: "Contexto rápido"
           text: "Veja o status de um lugar em poucos segundos."
         reporting:
           title: "Relato simples"
-          text: "Contribua com atualizacoes quando algo mudar."
+          text: "Contribua com atualizações quando algo mudar."
       panel:
         positive: "Seguro"
-        neutral: "Atencao"
+        neutral: "Atenção"
         negative: "Evitar"
-        overline: "Leitura rapida"
-        title: "Tres status claros para decidir mais rapido"
-        text: "O Before You Go transforma relatos recentes da comunidade em um sinal mais simples, para voce entender rapidamente se um lugar parece seguro, incerto ou arriscado."
+        overline: "Leitura rápida"
+        title: "Três status claros para decidir mais rápido"
+        text: "O Before You Go transforma relatos recentes da comunidade em um sinal mais simples, para você entender rapidamente se um lugar parece seguro, incerto ou arriscado."
         metrics:
-          statuses: "status faceis de entender"
+          statuses: "status fáceis de entender"
           access: "acesso quando precisar"
-          community: "informacao baseada na comunidade"
+          community: "informação baseada na comunidade"
 
     trust:
-      safety: "Informacao orientada a seguranca"
-      location: "Busca por lugar ou endereco"
-      community: "Construido com a comunidade"
+      safety: "Informação orientada à segurança"
+      location: "Busca por lugar ou endereço"
+      community: "Construído com a comunidade"
 
     how_it_works:
       eyebrow: "Como funciona"
       title: "Uma forma mais clara de verificar um lugar antes de sair"
-      subtitle: "Pesquise, veja o status atual e contribua com atualizacoes para que a proxima pessoa tambem tenha um contexto melhor."
+      subtitle: "Pesquise, veja o status atual e contribua com atualizações para que a próxima pessoa também tenha um contexto melhor."
       cards:
         search:
           title: "Pesquise o local"
-          text: "Busque um lugar, endereco ou ponto de interesse e abra os detalhes."
+          text: "Busque um lugar, endereço ou ponto de interesse e abra os detalhes."
         status:
           title: "Entenda o sinal atual"
           text: "Veja o status do lugar e o contexto recente da comunidade antes de ir."
@@ -84,21 +84,21 @@ pt-BR:
 
     value:
       eyebrow: "Por que importa"
-      title: "Menos achismo, mais contexto util"
-      subtitle: "A ideia nao e prever tudo com perfeicao. E dar as pessoas uma forma pratica de avaliar um lugar usando experiencias recentes compartilhadas."
+      title: "Menos achismo, mais contexto útil"
+      subtitle: "A ideia não é prever tudo com perfeição. É dar às pessoas uma forma prática de avaliar um lugar usando experiências recentes compartilhadas."
       items:
         fast:
-          title: "Rapido de usar"
-          text: "Tenha uma leitura rapida sem procurar informacoes espalhadas."
+          title: "Rápido de usar"
+          text: "Tenha uma leitura rápida sem procurar informações espalhadas."
         clear:
-          title: "Facil de entender"
-          text: "Uma estrutura simples torna a situacao atual mais facil de interpretar."
+          title: "Fácil de entender"
+          text: "Uma estrutura simples torna a situação atual mais fácil de interpretar."
         shared:
           title: "Melhora com a comunidade"
-          text: "Quanto mais pessoas contribuem, mais util a plataforma fica."
+          text: "Quanto mais pessoas contribuem, mais útil a plataforma fica."
 
     bottom_cta:
       eyebrow: "Comece agora"
       title: "Verifique o lugar antes de sair"
-      subtitle: "Use a busca para explorar locais e revisar o que as pessoas estao reportando."
+      subtitle: "Use a busca para explorar locais e revisar o que as pessoas estão reportando."
       primary: "Buscar lugares"
