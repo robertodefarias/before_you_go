@@ -7,13 +7,21 @@ export default class extends Controller {
   connect() {
     this.timeout = null
     this.abortController = null
-    this.features = []
+    this.suggestions = []
     this.activeIndex = -1
+    this.sessionToken = this.generateSessionToken()
   }
 
   disconnect() {
     clearTimeout(this.timeout)
     this.abortOngoingRequest()
+  }
+
+  handleDocumentClick(event) {
+    if (!this.element.contains(event.target)) {
+      this.clearSuggestions()
+      this.setState("idle")
+    }
   }
 
   search() {
@@ -41,19 +49,19 @@ export default class extends Controller {
   }
 
   onKeydown(event) {
-    if (!this.features.length) return
+    if (!this.suggestions.length) return
 
     if (event.key === "ArrowDown") {
       event.preventDefault()
-      this.activeIndex = (this.activeIndex + 1) % this.features.length
+      this.activeIndex = (this.activeIndex + 1) % this.suggestions.length
       this.renderSuggestions()
     } else if (event.key === "ArrowUp") {
       event.preventDefault()
-      this.activeIndex = (this.activeIndex - 1 + this.features.length) % this.features.length
+      this.activeIndex = (this.activeIndex - 1 + this.suggestions.length) % this.suggestions.length
       this.renderSuggestions()
     } else if (event.key === "Enter" && this.activeIndex >= 0) {
       event.preventDefault()
-      this.selectPlace(this.features[this.activeIndex])
+      this.retrieveAndSelect(this.suggestions[this.activeIndex])
     } else if (event.key === "Escape") {
       this.clearSuggestions()
       this.setState("idle")
@@ -64,15 +72,15 @@ export default class extends Controller {
     this.abortOngoingRequest()
     this.abortController = new AbortController()
 
-    fetch(this.urlFor(query), { signal: this.abortController.signal })
+    fetch(this.suggestUrl(query), { signal: this.abortController.signal })
       .then(res => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
         return res.json()
       })
       .then(data => {
-        this.features = Array.isArray(data.features) ? data.features.slice(0, 5) : []
+        this.suggestions = Array.isArray(data.suggestions) ? data.suggestions.slice(0, 5) : []
 
-        if (this.features.length === 0) {
+        if (this.suggestions.length === 0) {
           this.renderMessage(this.localeText("empty"))
           this.setState("empty")
           return
@@ -84,7 +92,7 @@ export default class extends Controller {
       .catch(error => {
         if (error.name === "AbortError") return
 
-        this.features = []
+        this.suggestions = []
         this.renderMessage(this.localeText("error"))
         this.setState("error")
       })
@@ -93,55 +101,95 @@ export default class extends Controller {
       })
   }
 
+  retrieveAndSelect(suggestion) {
+    fetch(this.retrieveUrl(suggestion.mapbox_id))
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
+        return res.json()
+      })
+      .then(data => {
+        const feature = data.features?.[0]
+        if (!feature) return
+
+        const [lng, lat] = feature.geometry.coordinates
+        const fullName = suggestion.place_formatted
+          ? `${suggestion.name} — ${suggestion.place_formatted}`
+          : suggestion.name
+
+        this.inputTarget.value = fullName
+        this.clearSuggestions()
+        this.setState("idle")
+        this.sessionToken = this.generateSessionToken()
+
+        const mapEl = document.querySelector('[data-controller~="map"]')
+
+        if (mapEl) {
+          this.dispatch("placeSelected", { detail: { lat, lng, name: fullName } })
+        } else {
+          const locale = document.documentElement.lang || ""
+          const prefix = locale ? `/${locale}` : ""
+          window.location.href = `${prefix}/places?lat=${lat}&lng=${lng}`
+        }
+      })
+      .catch(() => {
+        this.renderMessage(this.localeText("error"))
+        this.setState("error")
+      })
+  }
+
   renderSuggestions() {
     this.suggestionsTarget.innerHTML = ""
-
-    this.features.forEach((feature, index) => {
+    this.suggestions.forEach((suggestion, index) => {
       const button = document.createElement("button")
       button.type = "button"
       button.className = "suggestion-item"
       if (index === this.activeIndex) button.classList.add("suggestion-item-active")
 
-      button.textContent = feature.place_name
+      button.textContent = `${suggestion.name} — ${this.formatAddress(suggestion)}`
+
       button.setAttribute("role", "option")
       button.setAttribute("aria-selected", index === this.activeIndex ? "true" : "false")
       button.dataset.suggestionIndex = index
+      button.dataset.action = "mouseover->search#highlightSuggestion mousedown->search#pickSuggestion"
 
       this.suggestionsTarget.appendChild(button)
     })
   }
 
+  highlightSuggestion(event) {
+    const index = parseInt(event.currentTarget.dataset.suggestionIndex)
+    if (index === this.activeIndex) return
+    this.activeIndex = index
+    this.suggestionsTarget.querySelectorAll(".suggestion-item").forEach((el, i) => {
+      el.classList.toggle("suggestion-item-active", i === index)
+      el.setAttribute("aria-selected", i === index ? "true" : "false")
+    })
+  }
+
+  pickSuggestion(event) {
+    event.preventDefault()
+    const index = parseInt(event.currentTarget.dataset.suggestionIndex)
+    this.retrieveAndSelect(this.suggestions[index])
+  }
+
+  formatAddress(suggestion) {
+    const ctx = suggestion.context || {}
+    const neighborhood = ctx.neighborhood?.name
+    const city = ctx.place?.name
+    const parts = [neighborhood, city].filter(Boolean)
+    return parts.length > 0 ? parts.join(", ") : (suggestion.place_formatted || "")
+  }
+
   clearSuggestions() {
-    this.features = []
+    this.suggestions = []
     this.activeIndex = -1
     this.suggestionsTarget.innerHTML = ""
   }
 
   renderMessage(message) {
-    this.features = []
+    this.suggestions = []
     this.activeIndex = -1
     this.suggestionsTarget.innerHTML = `<div class="search-feedback">${message}</div>`
-  }
-
-  selectPlace(feature) {
-    const [lng, lat] = feature.center
-    const name = feature.place_name
-
-    this.inputTarget.value = name
-    this.clearSuggestions()
-    this.setState("idle")
-
-    const mapEl = document.querySelector('[data-controller~="map"]')
-
-    if (mapEl) {
-      this.dispatch("placeSelected", {
-        detail: { lat, lng, name }
-      })
-    } else {
-      const locale = document.documentElement.lang || ""
-      const prefix = locale ? `/${locale}` : ""
-      window.location.href = `${prefix}/places?lat=${lat}&lng=${lng}`
-    }
   }
 
   setState(state) {
@@ -152,36 +200,30 @@ export default class extends Controller {
     if (this.abortController) this.abortController.abort()
   }
 
-  handleSuggestionMouseover(e) {
-    const btn = e.target.closest("[data-suggestion-index]")
-    if (!btn) return
-    const index = parseInt(btn.dataset.suggestionIndex)
-    if (index === this.activeIndex) return
-    this.activeIndex = index
-    this.suggestionsTarget.querySelectorAll(".suggestion-item").forEach((el, i) => {
-      el.classList.toggle("suggestion-item-active", i === index)
-      el.setAttribute("aria-selected", i === index ? "true" : "false")
-    })
-  }
-
-  handleSuggestionMousedown(e) {
-    const btn = e.target.closest("[data-suggestion-index]")
-    if (!btn) return
-    e.preventDefault()
-    const index = parseInt(btn.dataset.suggestionIndex)
-    this.selectPlace(this.features[index])
-  }
-
-  handleDocumentClick(event) {
-    if (!this.element.contains(event.target)) {
-      this.clearSuggestions()
-      this.setState("idle")
-    }
-  }
-
-  urlFor(query) {
+  suggestUrl(query) {
     const language = document.documentElement.lang === "en" ? "en" : "pt"
-    return `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${this.mapboxKeyValue}&language=${language}&country=BR&types=poi,address`
+    const params = new URLSearchParams({
+      q: query,
+      access_token: this.mapboxKeyValue,
+      session_token: this.sessionToken,
+      language,
+      country: "BR",
+      types: "poi,address",
+      limit: 5
+    })
+    return `https://api.mapbox.com/search/searchbox/v1/suggest?${params}`
+  }
+
+  retrieveUrl(mapboxId) {
+    const params = new URLSearchParams({
+      access_token: this.mapboxKeyValue,
+      session_token: this.sessionToken
+    })
+    return `https://api.mapbox.com/search/searchbox/v1/retrieve/${mapboxId}?${params}`
+  }
+
+  generateSessionToken() {
+    return crypto.randomUUID()
   }
 
   localeText(key) {
@@ -192,7 +234,6 @@ export default class extends Controller {
       error: portuguese ? "Não foi possível carregar sugestões agora." : "Could not load suggestions right now.",
       searchUnavailable: portuguese ? "Busca indisponível no momento." : "Search is currently unavailable."
     }
-
     return texts[key]
   }
 }
