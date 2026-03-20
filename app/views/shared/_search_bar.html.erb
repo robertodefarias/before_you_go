@@ -1,6 +1,7 @@
 <div class="search-bar"
      data-controller="search"
-     data-search-mapbox-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+     data-search-mapbox-key-value="<%= ENV['MAPBOX_API_KEY'] %>"
+     data-action="click@document->search#handleDocumentClick">
   <%= form_with url: places_path, method: :get, local: true, class: "search-form" do |f| %>
     <div class="search-input-wrapper">
       <%= f.text_field :query,
@@ -9,7 +10,8 @@
             class: "search-input",
             data: {
               search_target: "input",
-              action: "input->search#search keydown->search#onKeydown"
+              home_hero_map_target: "searchInput",
+              action: "input->search#search keydown->search#onKeydown input->home-hero-map#handleInput focus->home-hero-map#handleFocus blur->home-hero-map#handleBlur"
             },
             autocomplete: "off",
             role: "combobox",
@@ -31,6 +33,6 @@
     </div>
 
     <!-- Sugestões em tempo real -->
-    <div id="search-suggestions-list" data-search-target="suggestions" class="search-suggestions" role="listbox" aria-live="polite"></div>
+    <div id="search-suggestions-list" data-search-target="suggestions" data-action="mouseover->search#handleSuggestionMouseover mousedown->search#handleSuggestionMousedown" class="search-suggestions" role="listbox" aria-live="polite"></div>
   <% end %>
 </div>
