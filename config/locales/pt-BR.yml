@@ -36,7 +36,7 @@ pt-BR:
     hero:
       badge: "Segurança local com apoio da comunidade"
       title_html: "Saiba antes<br><span>de ir</span>"
-      subtitle: "Pesquise lugares no Brasil, veja relatos recentes e tome decisões com mais confiança antes de sair."
+      subtitle: "Pesquise lugares, veja relatos recentes e tome decisões com mais confiança antes de sair."
       search_helper: "Comece por um lugar, estabelecimento ou endereço para ver o que a comunidade está reportando."
       primary_cta: "Explorar lugares"
       secondary_cta: "Como funciona"
