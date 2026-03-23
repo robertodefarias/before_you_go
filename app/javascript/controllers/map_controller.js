@@ -182,16 +182,16 @@ export default class extends Controller {
         </p>
       </div>
 
-      <a
-        href="#"
-        class="mapbox-popup-card__button"
-        data-action="click->map#addPlace"
-        data-name="${this.escape(name)}"
-        data-address="${this.escape(address)}"
-        data-lat="${lat}"
-        data-lng="${lng}">
-        Adicionar primeira review
-      </a>
+      <button
+         type="button"
+         class="mapbox-popup-card__button"
+         data-action="click->map#addPlace"
+         data-name="${this.escape(name)}"
+         data-address="${this.escape(address)}"
+         data-lat="${lat}"
+         data-lng="${lng}">
+         Adicionar primeira review
+      </button>
     </div>
   `)
   .addTo(this.map)
