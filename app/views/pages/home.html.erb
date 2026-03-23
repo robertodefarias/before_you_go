@@ -1,8 +1,11 @@
-<div class="home-page" data-controller="home-hero-map">
+<div class="home-page" data-controller="home-hero-map" data-mapbox-key="<%= ENV['MAPBOX_API_KEY'] %>">
   <section class="hero-section">
     <div class="container">
       <div class="hero-map-stage">
         <div class="hero-live-map" data-home-hero-map-target="map"></div>
+        <div class="hero-user-pin" data-home-hero-map-target="userPin" hidden>
+          <span class="hero-user-pin-dot"></span>
+        </div>
 
         <div class="hero-map-scrim"></div>
 

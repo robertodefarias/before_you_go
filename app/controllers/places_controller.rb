@@ -6,7 +6,7 @@ class PlacesController < ApplicationController
       sql_query = "%#{query}%"
       @places = Place.where("name ILIKE :query OR address ILIKE :query", query: sql_query)
     else
-      @places = Place.all
+      @places = Place.all.order(created_at: :desc).limit(4)
     end
 
     @markers = @places.select { |place| place.latitude.present? && place.longitude.present? }.map do |place|
@@ -24,8 +24,14 @@ class PlacesController < ApplicationController
 
   def show
     @place = Place.find(params[:id])
+<<<<<<< HEAD
     @reports = @place.reports.order(created_at: :desc)
     @report = @place.reports.build
+=======
+    @reports = @place.reports
+    @recent_reports = @place.reports.order(created_at: :desc).limit(4)
+    @report = Report.new
+>>>>>>> origin/master
   end
 
   def create

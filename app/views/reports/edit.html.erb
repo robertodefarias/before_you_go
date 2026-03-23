@@ -1,0 +1,50 @@
+<% portuguese = I18n.locale.to_s == "pt-BR" %>
+<% category_options =
+     if portuguese
+       ["Ambiente", "Segurança", "Preconceito", "Assédio", "Violência", "Outros"]
+     else
+       ["Environment", "Safety", "Discrimination", "Harassment", "Violence", "Other"]
+     end %>
+<% status_options =
+     if portuguese
+       [["Positivo", "positive"], ["Negativo", "negative"]]
+     else
+       [["Positive", "positive"], ["Negative", "negative"]]
+     end %>
+
+  <section class="place-action-card place-action-card--edit">
+    <span class="place-section-eyebrow"><%= portuguese ? "Editando relato" : "Editing report" %></span>
+    <h2><%= portuguese ? "Editar relato" : "Edit report" %></h2>
+    <p><%= portuguese ? "Atualize as informações do seu relato abaixo." : "Update your report information below." %></p>
+
+    <%= form_with model: @report, url: place_report_path(@place, @report), method: :patch, class: "place-report-form" do |f| %>
+      <% if @report.errors.any? %>
+        <div class="place-form-errors">
+          <% @report.errors.full_messages.each do |msg| %>
+            <p><%= msg %></p>
+          <% end %>
+        </div>
+      <% end %>
+
+      <div class="place-form-group">
+        <%= f.label :category, (portuguese ? "Categoria" : "Category") %>
+        <%= f.select :category, category_options, {}, class: "place-form-control" %>
+      </div>
+
+      <div class="place-form-group">
+        <%= f.label :status, (portuguese ? "Tipo do relato" : "Report type") %>
+        <%= f.select :status, status_options, {}, class: "place-form-control" %>
+      </div>
+
+      <div class="place-form-group">
+        <%= f.label :description, (portuguese ? "Descrição" : "Description") %>
+        <%= f.text_area :description, rows: 5, class: "place-form-control place-form-control--textarea" %>
+      </div>
+
+      <%= f.submit(portuguese ? "Salvar alterações" : "Save changes", class: "place-submit-button") %>
+      <%= link_to(portuguese ? "Cancelar" : "Cancel",
+            place_path(@place),
+            class: "place-detail-back",
+            data: { turbo_frame: "_top" }) %>
+    <% end %>
+  </section>

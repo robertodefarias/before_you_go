@@ -38,7 +38,7 @@ en:
     hero:
       badge: "Community-powered local safety"
       title_html: "Know before<br><span>you go</span>"
-      subtitle: "Search places in Brazil, review recent reports, and decide with more confidence before heading out."
+      subtitle: "Search places, review recent reports, and decide with more confidence before heading out."
       search_helper: "Start with a place, venue, or address to see what the community is reporting."
       primary_cta: "Explore places"
       secondary_cta: "How it works"

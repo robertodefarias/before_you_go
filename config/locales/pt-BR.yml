@@ -36,7 +36,7 @@ pt-BR:
     hero:
       badge: "Segurança local com apoio da comunidade"
       title_html: "Saiba antes<br><span>de ir</span>"
-      subtitle: "Pesquise lugares no Brasil, veja relatos recentes e tome decisões com mais confiança antes de sair."
+      subtitle: "Pesquise lugares, veja relatos recentes e tome decisões com mais confiança antes de sair."
       search_helper: "Comece por um lugar, estabelecimento ou endereço para ver o que a comunidade está reportando."
       primary_cta: "Explorar lugares"
       secondary_cta: "Como funciona"
@@ -80,7 +80,7 @@ pt-BR:
           text: "Veja o status do lugar e o contexto recente da comunidade antes de ir."
         report:
           title: "Compartilhe o que mudou"
-          text: "Envie um relato para ajudar outras pessoas a decidirem melhor depois."
+          text: "Envie um relato para ajudar outras pessoas tomarem uma melhor decisão depois."
 
     value:
       eyebrow: "Por que importa"
@@ -105,7 +105,7 @@ pt-BR:
 
   devise:
     common:
-      not_found: "não encontrado"
+      not_found: "Não encontrado"
     sessions:
       user:
         signed_in: "Login efetuado com sucesso."

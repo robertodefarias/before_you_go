@@ -1,65 +1,30 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["map", "card", "searchInput"]
+  static targets = ["map", "card", "searchInput", "userPin"]
 
   connect() {
-    this.defaultCenter = [-14.235, -51.9253]
-    this.defaultZoom = 4
-    this.map = null
-    this.L = null
+    this.defaultCenter = { lng: -51.9253, lat: -14.235, zoom: 4 }
+    this.focusCenter = { lng: -47.93, lat: -15.78, zoom: 5 }
     this.typingTimer = null
-    this.userMarker = null
     this.userLocation = null
 
-    this.loadMap()
+    this.renderMap(this.defaultCenter)
+    this.locateUser()
   }
 
   disconnect() {
-    if (this.map) {
-      this.map.remove()
-      this.map = null
-    }
-  }
-
-  async loadMap() {
-    if (!this.hasMapTarget) return
-
-    const leafletModule = await import("https://unpkg.com/leaflet@1.9.4/dist/leaflet-src.esm.js")
-    this.L = leafletModule
-
-    this.map = this.L.map(this.mapTarget, {
-      zoomControl: false,
-      attributionControl: false,
-      dragging: true,
-      scrollWheelZoom: false,
-      doubleClickZoom: false,
-      boxZoom: false,
-      keyboard: false,
-      tap: false,
-      touchZoom: true
-    })
-
-    this.map.setView(this.defaultCenter, this.defaultZoom)
-
-    this.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 18
-    }).addTo(this.map)
-
-    setTimeout(() => {
-      this.map.invalidateSize()
-      this.locateUser()
-    }, 200)
+    clearTimeout(this.typingTimer)
   }
 
   locateUser() {
-    if (!this.map || !navigator.geolocation) return
+    if (!navigator.geolocation) return
 
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
-        this.userLocation = [coords.latitude, coords.longitude]
-        this.placeUserMarker()
-        this.frameUserLocation({ animate: false })
+        this.userLocation = { lng: coords.longitude, lat: coords.latitude }
+        this.showUserPin()
+        this.renderMap(this.userViewport(false))
       },
       () => {},
       {
@@ -68,42 +33,6 @@ export default class extends Controller {
         maximumAge: 300000
       }
     )
-  }
-
-  placeUserMarker() {
-    if (!this.map || !this.L || !this.userLocation) return
-
-    if (this.userMarker) {
-      this.userMarker.setLatLng(this.userLocation)
-      return
-    }
-
-    this.userMarker = this.L.circleMarker(this.userLocation, {
-      radius: 8,
-      weight: 3,
-      color: "#ffffff",
-      fillColor: "#2563eb",
-      fillOpacity: 1
-    }).addTo(this.map)
-  }
-
-  frameUserLocation({ animate }) {
-    if (!this.map || !this.userLocation) return
-
-    const zoom = 13
-    const targetLatLng = this.L.latLng(this.userLocation[0], this.userLocation[1])
-    const mapSize = this.map.getSize()
-    const desiredPoint = this.L.point(mapSize.x * 0.64, mapSize.y * 0.24)
-    const screenCenter = this.L.point(mapSize.x / 2, mapSize.y / 2)
-    const offset = desiredPoint.subtract(screenCenter)
-    const projectedTarget = this.map.project(targetLatLng, zoom)
-    const projectedCenter = projectedTarget.subtract(offset)
-    const center = this.map.unproject(projectedCenter, zoom)
-
-    this.map.flyTo(center, zoom, {
-      animate,
-      duration: animate ? 1.2 : 0
-    })
   }
 
   handleInput() {
@@ -132,33 +61,101 @@ export default class extends Controller {
   }
 
   focusMap() {
-    if (!this.map) return
-
     clearTimeout(this.typingTimer)
 
     this.typingTimer = setTimeout(() => {
       if (this.userLocation) {
-        this.frameUserLocation({ animate: true })
+        this.renderMap(this.userViewport(true))
       } else {
-        this.map.flyTo([-15.78, -47.93], 5, {
-          animate: true,
-          duration: 1.2
-        })
+        this.renderMap(this.focusCenter)
       }
     }, 250)
   }
 
   resetMap() {
-    if (!this.map) return
-
     if (this.userLocation) {
-      this.frameUserLocation({ animate: true })
+      this.renderMap(this.userViewport(true))
       return
     }
 
-    this.map.flyTo(this.defaultCenter, this.defaultZoom, {
-      animate: true,
-      duration: 1
-    })
+    this.renderMap(this.defaultCenter)
+  }
+
+  renderMap({ lng, lat, zoom }) {
+    if (!this.hasMapTarget || !this.mapboxToken) return
+
+    const width = 1280
+    const height = 900
+    const viewport = this.userLocation
+      ? this.staticViewportForPin({ lng, lat, zoom }, width, height)
+      : { lng, lat, zoom }
+    const center = `${viewport.lng},${viewport.lat},${viewport.zoom},0`
+
+    this.mapTarget.style.backgroundImage = `url("${this.staticMapUrl(center, width, height)}")`
+  }
+
+  userViewport(focused) {
+    return {
+      lng: focused ? this.userLocation.lng - 0.12 : this.userLocation.lng,
+      lat: focused ? this.userLocation.lat - 0.06 : this.userLocation.lat,
+      zoom: focused ? 12.4 : 12
+    }
+  }
+
+  staticViewportForPin(viewport, width, height) {
+    const targetPoint = {
+      x: width * 0.68,
+      y: height * 0.26
+    }
+    const screenCenter = {
+      x: width / 2,
+      y: height / 2
+    }
+    const offset = {
+      x: targetPoint.x - screenCenter.x,
+      y: targetPoint.y - screenCenter.y
+    }
+    const scale = 512 * (2 ** viewport.zoom)
+    const projectedTarget = this.projectMercator(this.userLocation.lng, this.userLocation.lat, scale)
+    const projectedCenter = {
+      x: projectedTarget.x - offset.x,
+      y: projectedTarget.y - offset.y
+    }
+
+    return {
+      ...this.unprojectMercator(projectedCenter.x, projectedCenter.y, scale),
+      zoom: viewport.zoom
+    }
+  }
+
+  projectMercator(lng, lat, scale) {
+    const limitedLat = Math.max(Math.min(lat, 85.05112878), -85.05112878)
+    const x = (lng + 180) / 360 * scale
+    const sinLat = Math.sin((limitedLat * Math.PI) / 180)
+    const y = (0.5 - Math.log((1 + sinLat) / (1 - sinLat)) / (4 * Math.PI)) * scale
+
+    return { x, y }
+  }
+
+  unprojectMercator(x, y, scale) {
+    const lng = x / scale * 360 - 180
+    const n = Math.PI - (2 * Math.PI * y) / scale
+    const lat = (180 / Math.PI) * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n)))
+
+    return { lng, lat }
+  }
+
+  showUserPin() {
+    if (!this.hasUserPinTarget) return
+
+    this.userPinTarget.hidden = false
+  }
+
+  staticMapUrl(center, width, height) {
+    return `https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/${center}/${width}x${height}?access_token=${this.mapboxToken}`
+  }
+
+  get mapboxToken() {
+    return this.element.dataset.mapboxKey
   }
 }
