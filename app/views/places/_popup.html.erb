@@ -1,46 +1,58 @@
-<div class="map-popup-card map-popup-card--<%= place.status %>">
-  <div class="map-popup-card__header">
-    <div>
-      <h3 class="map-popup-card__title"><%= place.name %></h3>
-      <p class="map-popup-card__address"><%= place.address %></p>
+<% portuguese = I18n.locale.to_s == "pt-BR" %>
+
+<% status_class =
+     case place.status
+     when "positive" then "map-popup-status--positive"
+     when "negative" then "map-popup-status--negative"
+     else "map-popup-status--neutral"
+     end %>
+
+<% badge_text =
+     if portuguese
+       case place.status
+       when "positive" then "Local seguro"
+       when "negative" then "Evitar"
+       else "Atenção"
+       end
+     else
+       case place.status
+       when "positive" then "Safe place"
+       when "negative" then "Avoid"
+       else "Attention"
+       end
+     end %>
+
+<% latest_report = place.reports.last %>
+
+<% latest_report_text =
+     if latest_report.present?
+       latest_report.try(:description).presence ||
+       latest_report.try(:comment).presence ||
+       latest_report.try(:details).presence ||
+       latest_report.try(:body).presence ||
+       latest_report.try(:message).presence ||
+       latest_report.try(:summary).presence
+     end %>
+
+<div class="map-popup-card">
+  <div class="map-popup-status <%= status_class %>"></div>
+
+  <div class="map-popup-body">
+    <div class="map-popup-header">
+      <span class="map-popup-badge"><%= badge_text %></span>
+      <h3 class="map-popup-title"><%= place.name %></h3>
     </div>
 
-    <span class="map-popup-card__badge map-popup-card__badge--<%= place.status %>">
-      <%= place.status_label %>
-    </span>
-  </div>
+    <p class="map-popup-text">
+      <%= latest_report_text.presence || (portuguese ? "Ainda não há relatos para este local." : "There are no reports for this place yet.") %>
+    </p>
 
-  <% if place.reports.empty? %>
-    <div class="map-popup-card__empty">
-      <p class="map-popup-card__empty-title">Ainda não há relatos</p>
-      <p class="map-popup-card__empty-text">
-        Seja a primeira pessoa a adicionar contexto para este local.
-      </p>
+    <div class="map-popup-footer">
+      <%= link_to(
+            portuguese ? "Ver detalhes" : "View details",
+            place_path(place),
+            class: "map-popup-button"
+          ) %>
     </div>
-  <% else %>
-    <div class="map-popup-card__reports">
-      <% place.reports.limit(2).each do |report| %>
-        <article class="map-popup-report map-popup-report--<%= report.status %>">
-          <div class="map-popup-report__top">
-            <span class="map-popup-report__category"><%= report.category %></span>
-            <span class="map-popup-report__status map-popup-report__status--<%= report.status %>">
-              <%= report.status == "positive" ? "Positivo" : "Negativo" %>
-            </span>
-          </div>
-
-          <p class="map-popup-report__description"><%= truncate(report.description, length: 110) %></p>
-        </article>
-      <% end %>
-
-      <% if place.reports.count > 2 %>
-        <p class="map-popup-card__more">
-          +<%= place.reports.count - 2 %> relatos
-        </p>
-      <% end %>
-    </div>
-  <% end %>
-
-  <div class="map-popup-card__footer">
-    <%= link_to "Ver detalhes", place_path(place), class: "map-popup-card__button" %>
   </div>
 </div>

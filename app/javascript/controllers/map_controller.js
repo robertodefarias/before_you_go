@@ -163,35 +163,32 @@ export default class extends Controller {
 })
   .setLngLat(event.lngLat)
   .setHTML(`
-    <div class="mapbox-popup-card mapbox-popup-card--empty">
-      <div class="mapbox-popup-card__header mapbox-popup-card__header--stack">
-        <div>
-          <span class="mapbox-popup-card__eyebrow">Local encontrado</span>
-          <h3 class="mapbox-popup-card__title">${this.escape(name)}</h3>
-          ${category ? `<p class="mapbox-popup-card__category">${this.escape(category)}</p>` : ""}
+    <div class="map-popup-card">
+      <div class="map-popup-status map-popup-status--neutral"></div>
+
+      <div class="map-popup-body">
+        <div class="map-popup-header">
+          <span class="map-popup-badge">Atenção</span>
+          <h3 class="map-popup-title">${this.escape(name)}</h3>
         </div>
-        <span class="mapbox-popup-card__badge mapbox-popup-card__badge--neutral">Sem reviews</span>
-      </div>
 
-      <p class="mapbox-popup-card__address">${this.escape(address)}</p>
-
-      <div class="mapbox-popup-card__empty">
-        <p class="mapbox-popup-card__empty-title">Ainda não há reviews</p>
-        <p class="mapbox-popup-card__empty-text">
-          Seja a primeira pessoa a adicionar contexto para este local.
+        <p class="map-popup-text">
+          Ainda não há relatos para este local.
         </p>
-      </div>
 
-      <button
-         type="button"
-         class="mapbox-popup-card__button"
-         data-action="click->map#addPlace"
-         data-name="${this.escape(name)}"
-         data-address="${this.escape(address)}"
-         data-lat="${lat}"
-         data-lng="${lng}">
-         Adicionar primeira review
-      </button>
+        <div class="map-popup-footer">
+          <button
+            type="button"
+            class="map-popup-button"
+            data-action="click->map#addPlace"
+            data-name="${this.escape(name)}"
+            data-address="${this.escape(address)}"
+            data-lat="${lat}"
+            data-lng="${lng}">
+            Adicionar primeira review
+          </button>
+        </div>
+      </div>
     </div>
   `)
   .addTo(this.map)
