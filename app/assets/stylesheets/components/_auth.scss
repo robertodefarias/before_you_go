@@ -181,9 +181,19 @@
   padding-top: 4px;
 }
 
+.auth-form .boolean input[type="checkbox"] {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: #3e6cff;
+  cursor: pointer;
+}
+
 .auth-form .boolean label {
   margin: 0;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .auth-submit {

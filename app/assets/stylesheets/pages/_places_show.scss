@@ -349,6 +349,16 @@
   color: #66758f;
 }
 
+.place-report-form-simple {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.place-report-form-simple .place-submit-button {
+  margin-top: 8px;
+}
+
 .place-report-form {
   display: grid;
   gap: 16px;
