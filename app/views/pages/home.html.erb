@@ -60,36 +60,60 @@
           </div>
 
           <div class="hero-panel">
-            <div class="hero-panel-card" data-home-hero-map-target="card">
-              <div class="hero-panel-top">
-                <span class="panel-label panel-label-positive"><%= t("home.hero.panel.positive") %></span>
-                <span class="panel-label panel-label-neutral"><%= t("home.hero.panel.neutral") %></span>
-                <span class="panel-label panel-label-negative"><%= t("home.hero.panel.negative") %></span>
-              </div>
+            <div class="hero-panel-card flip-card">
+              <div class="flip-card-inner" data-controller="flip">
 
-              <div class="hero-panel-body">
-                <p class="panel-overline"><%= t("home.hero.panel.overline") %></p>
-                <h3><%= t("home.hero.panel.title") %></h3>
-                <p><%= t("home.hero.panel.text") %></p>
-              </div>
+                <!-- FRENTE -->
+                <div class="flip-card-front">
+                  <div class="hero-panel-top">
+                    <span class="panel-label panel-label-positive"><%= t("home.hero.panel.positive") %></span>
+                    <span class="panel-label panel-label-neutral"><%= t("home.hero.panel.neutral") %></span>
+                    <span class="panel-label panel-label-negative"><%= t("home.hero.panel.negative") %></span>
+                  </div>
 
-              <div class="hero-panel-metrics">
-                <div class="panel-metric">
-                  <strong>3</strong>
-                  <span><%= t("home.hero.panel.metrics.statuses") %></span>
+                  <div class="hero-panel-body">
+                    <p class="panel-overline"><%= t("home.hero.panel.overline") %></p>
+                    <h3><%= t("home.hero.panel.title") %></h3>
+                    <p><%= t("home.hero.panel.text") %></p>
+                  </div>
+
+                  <div class="hero-panel-metrics">
+                    <div class="panel-metric">
+                      <strong>3</strong>
+                      <span><%= t("home.hero.panel.metrics.statuses") %></span>
+                    </div>
+
+                    <div class="panel-metric">
+                      <strong>24/7</strong>
+                      <span><%= t("home.hero.panel.metrics.access") %></span>
+                    </div>
+
+                    <div class="panel-metric">
+                      <strong>100%</strong>
+                      <span><%= t("home.hero.panel.metrics.community") %></span>
+                    </div>
+                  </div>
+
+                  <% if user_signed_in? %>
+                    <button class="place-submit-button" data-action="click->flip#toggle">
+                      Minhas Reviews
+                    </button>
+                  <% end %>
                 </div>
 
-                <div class="panel-metric">
-                  <strong>24/7</strong>
-                  <span><%= t("home.hero.panel.metrics.access") %></span>
-                </div>
+                <!-- VERSO -->
+                <div class="flip-card-back">
+                  <h3>Minhas Reviews</h3>
 
-                <div class="panel-metric">
-                  <strong>100%</strong>
-                  <span><%= t("home.hero.panel.metrics.community") %></span>
+                  <p>Aqui vai aparecer conteúdo depois 👀</p>
+
+                  <button class="place-submit-button" data-action="click->flip#toggle">
+                    Voltar
+                  </button>
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>
