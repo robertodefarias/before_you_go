@@ -80,7 +80,7 @@ pt-BR:
           text: "Veja o status do lugar e o contexto recente da comunidade antes de ir."
         report:
           title: "Compartilhe o que mudou"
-          text: "Envie um relato para ajudar outras pessoas a decidirem melhor depois."
+          text: "Envie um relato para ajudar outras pessoas tomarem uma melhor decisão depois."
 
     value:
       eyebrow: "Por que importa"
@@ -105,7 +105,7 @@ pt-BR:
 
   devise:
     common:
-      not_found: "não encontrado"
+      not_found: "Não encontrado"
     sessions:
       user:
         signed_in: "Login efetuado com sucesso."
