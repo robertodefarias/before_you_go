@@ -13,48 +13,92 @@
         <div class="hero-map-glow hero-map-glow-two"></div>
 
         <div class="hero-shell">
-          <div class="hero-content">
-            <div class="hero-badge">
-              <span><%= t("home.hero.badge") %></span>
-            </div>
+          <div class="hero-content flip-card">
+            <div class="flip-card-inner" data-controller="flip">
+              <!-- 🔵 FRENTE -->
+              <div class="flip-card-front">
+                <div class="flip-card-front-header">
+                  <div class="hero-badge">
+                    <span><%= t("home.hero.badge") %></span>
+                  </div>
+                  <% if user_signed_in? %>
+                    <button class="btn-minhas-reviews" data-action="click->flip#toggle">
+                      Minhas Reviews
+                    </button>
+                  <% end %>
+                </div>
 
-            <h1 class="hero-title">
-              <%= t("home.hero.title_html").html_safe %>
-            </h1>
+                <h1 class="hero-title">
+                  <%= t("home.hero.title_html").html_safe %>
+                </h1>
 
-            <p class="hero-subtitle">
-              <%= t("home.hero.subtitle") %>
-            </p>
+                <p class="hero-subtitle">
+                  <%= t("home.hero.subtitle") %>
+                </p>
 
-            <div class="hero-actions">
-              <div class="home-search-wrapper">
-                <%= render "shared/search_bar" %>
+                <div class="hero-actions">
+                  <div class="home-search-wrapper">
+                    <%= render "shared/search_bar" %>
+                  </div>
+
+                  <p class="search-helper-text">
+                    <%= t("home.hero.search_helper") %>
+                  </p>
+
+                  <div class="hero-cta-row">
+                    <%= link_to t("home.hero.primary_cta"), places_path, class: "hero-primary-cta" %>
+                    <%= link_to t("home.hero.secondary_cta"), "#how-it-works", class: "hero-secondary-cta" %>
+                  </div>
+                </div>
+             
+
+                <div class="hero-stats">
+                  <div class="mini-stat">
+                    <strong><%= t("home.hero.stats.community.title") %></strong>
+                    <span><%= t("home.hero.stats.community.text") %></span>
+                  </div>
+
+                  <div class="mini-stat">
+                    <strong><%= t("home.hero.stats.instant.title") %></strong>
+                    <span><%= t("home.hero.stats.instant.text") %></span>
+                  </div>
+
+                  <div class="mini-stat">
+                    <strong><%= t("home.hero.stats.reporting.title") %></strong>
+                    <span><%= t("home.hero.stats.reporting.text") %></span>
+                  </div>
+                </div>
               </div>
 
-              <p class="search-helper-text">
-                <%= t("home.hero.search_helper") %>
-              </p>
+              <!-- 🔴 VERSO -->
+              <div class="flip-card-back">
+                <div class="hero-badge">
+                  <span>Minhas Reviews</span>
+                </div>
 
-              <div class="hero-cta-row">
-                <%= link_to t("home.hero.primary_cta"), places_path, class: "hero-primary-cta" %>
-                <%= link_to t("home.hero.secondary_cta"), "#how-it-works", class: "hero-secondary-cta" %>
-              </div>
-            </div>
+                <% if user_signed_in? %>
+                  <% user_reports = current_user.reports.order(created_at: :desc).limit(5) %>
 
-            <div class="hero-stats">
-              <div class="mini-stat">
-                <strong><%= t("home.hero.stats.community.title") %></strong>
-                <span><%= t("home.hero.stats.community.text") %></span>
-              </div>
+                  <% if user_reports.any? %>
+                    <div class="user-reports-list">
+                      <% user_reports.each do |report| %>
+                        <div class="user-report-item">
+                          <strong><%= report.place.name %></strong>
+                          <p><%= report.description.truncate(80) %></p>
+                          <span><%= report.status %></span>
+                        </div>
+                      <% end %>
+                    </div>
+                  <% else %>
+                    <p>Você ainda não tem relatos.</p>
+                  <% end %>
 
-              <div class="mini-stat">
-                <strong><%= t("home.hero.stats.instant.title") %></strong>
-                <span><%= t("home.hero.stats.instant.text") %></span>
-              </div>
-
-              <div class="mini-stat">
-                <strong><%= t("home.hero.stats.reporting.title") %></strong>
-                <span><%= t("home.hero.stats.reporting.text") %></span>
+                  <button class="hero-primary-cta" data-action="click->flip#toggle">
+                    Voltar
+                  </button>
+                <% else %>
+                  <p>Faça login para ver suas reviews</p>
+                <% end %>
               </div>
             </div>
           </div>
