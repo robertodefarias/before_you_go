@@ -1,47 +1,56 @@
 <% query = params[:query].to_s.strip %>
 <% portuguese = I18n.locale.to_s == "pt-BR" %>
+
 <% back_label =
-     if query.present?
-       portuguese ? "← Voltar aos resultados" : "← Back to results"
-     else
-       portuguese ? "← Voltar para o mapa" : "← Back to map"
-     end %>
+      if query.present?
+        portuguese ? "← Voltar aos resultados" : "← Back to results"
+      else
+        portuguese ? "← Voltar para o mapa" : "← Back to map"
+      end %>
+
 <% category_options =
-     if portuguese
-       ["Ambiente", "Segurança", "Preconceito", "Assédio", "Violência", "Outros"]
-     else
-       ["Environment", "Safety", "Discrimination", "Harassment", "Violence", "Other"]
-     end %>
+      if portuguese
+        ["Ambiente", "Segurança", "Preconceito", "Assédio", "Violência", "Outros"]
+      else
+        ["Environment", "Safety", "Discrimination", "Harassment", "Violence", "Other"]
+      end %>
+
 <% status_options =
-     if portuguese
-       [["Positivo", "positive"], ["Negativo", "negative"]]
-     else
-       [["Positive", "positive"], ["Negative", "negative"]]
-     end %>
+      if portuguese
+        [["Positivo", "positive"], ["Negativo", "negative"]]
+      else
+        [["Positive", "positive"], ["Negative", "negative"]]
+      end %>
+
 <% status_key = @place.status %>
 <% status_label =
-     case status_key
-     when "positive" then (portuguese ? "Seguro" : "Safe")
-     when "negative" then (portuguese ? "Evitar" : "Avoid")
-     else
-       portuguese ? "Atenção" : "Attention"
-     end %>
+      case status_key
+      when "positive" then (portuguese ? "Seguro" : "Safe")
+      when "negative" then (portuguese ? "Evitar" : "Avoid")
+      else
+        portuguese ? "Atenção" : "Attention"
+      end %>
+
 <% positive_count = @reports.count { |report| report.status == "positive" } %>
 <% negative_count = @reports.count { |report| report.status == "negative" } %>
 <% latest_report = @reports.max_by(&:created_at) %>
 <% latest_report_label =
-     if latest_report.present?
-       portuguese ? latest_report.created_at.strftime("%d/%m/%Y") : latest_report.created_at.strftime("%b %d, %Y")
-     else
-       "—"
-     end %>
+      if latest_report.present?
+        portuguese ? latest_report.created_at.strftime("%d/%m/%Y") : latest_report.created_at.strftime("%b %d, %Y")
+      else
+        "—"
+      end %>
 
 <div class="place-detail-page">
   <div class="container">
     <div class="place-detail-shell">
       <%= link_to(
             back_label,
-            query.present? ? places_path(query: query) : places_path,
+            if query.present?
+              places_path(query: query, place_id: @place.id, lat: @place.latitude, lng: @place.longitude)
+            else
+              places_path(place_id: @place.id, lat: @place.latitude, lng: @place.longitude)
+            end,
             class: "place-detail-back"
           ) %>
 
