@@ -1,5 +1,5 @@
 .search-bar {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   position: relative;
 }
 
@@ -11,10 +11,10 @@
   display: flex;
   align-items: center;
   width: 100%;
-  gap: 10px;
+  gap: 8px;
   background: #ffffff;
   border-radius: 14px;
-  padding: 6px;
+  padding: 5px;
   border: 1px solid #e5e7eb;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: all 0.2s ease;
@@ -36,8 +36,8 @@
   flex: 1;
   border: none;
   outline: none;
-  padding: 12px 14px;
-  font-size: 15px;
+  padding: 10px 12px;
+  font-size: 13px;
   border-radius: 10px;
   background: transparent;
 }
@@ -55,10 +55,10 @@
   border: 1px solid #e5e7eb;
   border-radius: 12px;
 
-  width: 48px;   /* tamanho fixo */
-  height: 48px;  /* deixa quadrado */
+  width: 42px;   /* tamanho fixo */
+  height: 42px;  /* deixa quadrado */
 
-  padding: 6px;  /* espaço interno */
+  padding: 5px;  /* espaço interno */
   cursor: pointer;
 
   transition: all 0.2s ease;
@@ -75,6 +75,8 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+  transform: scale(1.375);
+  transform-origin: center;
 }
 
 .search-suggestions {

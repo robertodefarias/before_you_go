@@ -37,7 +37,7 @@ en:
   home:
     hero:
       badge: "Community-powered local safety"
-      title_html: "Know before<br><span>you go</span>"
+      title_html: "Know before <span>you go</span>"
       subtitle: "Search places, review recent reports, and decide with more confidence before heading out."
       search_helper: "Start with a place, venue, or address to see what the community is reporting."
       primary_cta: "Explore places"
@@ -57,12 +57,13 @@ en:
         neutral: "Attention"
         negative: "Avoid"
         overline: "Quick read"
-        title: "Three clear statuses for faster decisions"
-        text: "Before You Go turns recent community reports into a simpler signal, so you can quickly understand whether a place feels safe, uncertain, or risky."
-        metrics:
-          statuses: "easy-to-read statuses"
-          access: "access whenever you need it"
-          community: "community-based information"
+        title: "Compare places visually"
+        text: "Use the pin legend to quickly understand whether a place feels safe, more safe than dangerous, dangerous, or marks your location."
+        legend:
+          safe: "Safe place"
+          safer_html: "<span class='legend-line'>More safe</span><span class='legend-line'>than dangerous</span>"
+          user_location: "Intent to go"
+          danger_html: "<span class='legend-line'>Dangerous</span><span class='legend-line'>Avoid</span>"
 
     trust:
       safety: "Safety-oriented information"

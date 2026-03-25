@@ -28,7 +28,12 @@
                   <% end %>
                 </div>
 
-                <h1 class="hero-title">
+                <h1
+                  class="hero-title"
+                  data-controller="fit-text"
+                  data-fit-text-min-value="24"
+                  data-fit-text-max-value="36"
+                >
                   <%= t("home.hero.title_html").html_safe %>
                 </h1>
 
@@ -119,24 +124,35 @@
 
               <div class="hero-panel-body">
                 <p class="panel-overline"><%= t("home.hero.panel.overline") %></p>
-                <h3><%= t("home.hero.panel.title") %></h3>
+                <h3
+                  data-controller="fit-text"
+                  data-fit-text-min-value="24"
+                  data-fit-text-max-value="36"
+                >
+                  <%= t("home.hero.panel.title") %>
+                </h3>
                 <p><%= t("home.hero.panel.text") %></p>
               </div>
 
               <div class="hero-panel-metrics">
-                <div class="panel-metric">
-                  <strong>3</strong>
-                  <span><%= t("home.hero.panel.metrics.statuses") %></span>
+                <div class="panel-metric panel-metric--legend panel-metric--safe">
+                  <span class="panel-pin panel-pin-safe" aria-hidden="true"></span>
+                  <span class="panel-metric-text"><%= t("home.hero.panel.legend.safe") %></span>
                 </div>
 
-                <div class="panel-metric">
-                  <strong>24/7</strong>
-                  <span><%= t("home.hero.panel.metrics.access") %></span>
+                <div class="panel-metric panel-metric--legend panel-metric--safer panel-metric--positive">
+                  <span class="panel-pin panel-pin-positive" aria-hidden="true"></span>
+                  <span class="panel-metric-text panel-metric-text--safer"><%= t("home.hero.panel.legend.safer_html").html_safe %></span>
                 </div>
 
-                <div class="panel-metric">
-                  <strong>100%</strong>
-                  <span><%= t("home.hero.panel.metrics.community") %></span>
+                <div class="panel-metric panel-metric--legend panel-metric--user">
+                  <span class="panel-pin panel-pin-user" aria-hidden="true"></span>
+                  <span class="panel-metric-text"><%= t("home.hero.panel.legend.user_location") %></span>
+                </div>
+
+                <div class="panel-metric panel-metric--legend panel-metric--danger">
+                  <span class="panel-pin panel-pin-danger" aria-hidden="true"></span>
+                  <span class="panel-metric-text"><%= t("home.hero.panel.legend.danger_html").html_safe %></span>
                 </div>
               </div>
             </div>

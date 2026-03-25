@@ -33,7 +33,7 @@ pt-BR:
   home:
     hero:
       badge: "Segurança local com apoio da comunidade"
-      title_html: "Saiba antes<br><span>de ir</span>"
+      title_html: "Saiba antes <span>de ir</span>"
       subtitle: "Pesquise lugares, veja relatos recentes e tome decisões com mais confiança antes de sair."
       search_helper: "Comece por um lugar, estabelecimento ou endereço para ver o que a comunidade está reportando."
       primary_cta: "Explorar lugares"
@@ -50,15 +50,16 @@ pt-BR:
           text: "Contribua com atualizações quando algo mudar."
       panel:
         positive: "Seguro"
-        neutral: "Atenção"
+        neutral: "Intenção"
         negative: "Evitar"
         overline: "Leitura rápida"
-        title: "Três status claros para decidir mais rápido"
-        text: "O Before You Go transforma relatos recentes da comunidade em um sinal mais simples, para você entender rapidamente se um lugar parece seguro, incerto ou arriscado."
-        metrics:
-          statuses: "status fáceis de entender"
-          access: "acesso quando precisar"
-          community: "informação baseada na comunidade"
+        title: "Compare locais visualmente"
+        text: "Use a legenda dos pins para entender rapidamente se o local parece seguro, mais seguro que perigoso, perigoso ou se marca a sua localização."
+        legend:
+          safe: "Local seguro"
+          safer_html: "<span class='legend-line'>Mais seguro</span><span class='legend-line'>que perigoso</span>"
+          user_location: "Intenção de ir"
+          danger_html: "<span class='legend-line'>Perigoso</span><span class='legend-line'>evitar</span>"
     trust:
       safety: "Informação orientada à segurança"
       location: "Busca por lugar ou endereço"
