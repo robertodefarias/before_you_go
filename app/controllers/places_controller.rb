@@ -32,7 +32,7 @@ class PlacesController < ApplicationController
     @reports = @place.reports.includes(:user).order(created_at: :desc)
 
     if user_signed_in?
-      @user_report = @place.reports.find_by(user: current_user)
+      @user_report = @reports.find { |r| r.user_id == current_user.id }
       @report = @user_report || @place.reports.build
     else
       @user_report = nil

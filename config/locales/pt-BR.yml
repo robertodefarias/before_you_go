@@ -110,6 +110,7 @@ pt-BR:
       signed_up: "Bem-vindo! Você realizou seu registro com sucesso."
       updated: "Sua conta foi atualizada com sucesso."
       destroyed: "Tchau! Sua conta foi cancelada com sucesso. Esperamos ver você novamente em breve."
+      password_placeholder: "Mínimo de %{count} caracteres"
     passwords:
       send_instructions: "Você receberá um e-mail com instruções sobre como redefinir sua senha em alguns minutos."
       updated: "Sua senha foi alterada com sucesso. Você está logado."
@@ -119,8 +120,14 @@ pt-BR:
 
   activerecord:
     attributes:
-      report:
-        description: "O relato"
+      user:
+        first_name: "Primeiro nome"
+        last_name: "Sobrenome"
+        email: "E-mail"
+        password: "Senha"
+        password_confirmation: "Confirmação de senha"
+    report:
+      description: "O relato"
     errors:
       models:
         report:

@@ -196,7 +196,7 @@
               </div>
             <% else %>
               <div class="place-reports-list">
-                <% @reports.order(created_at: :desc).each do |report| %>
+                <% @reports.each do |report| %>
                   <% report_status_label =
                        case report.status
                        when "positive"

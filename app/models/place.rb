@@ -3,7 +3,7 @@ class Place < ApplicationRecord
   has_many :favorites, dependent: :destroy # se o lugar for deletado, remove dos favoritos
 
   geocoded_by :address
-  after_validation :geocode, if: :address_changed?
+  after_validation :geocode, if: ->(obj) { obj.address_changed? && obj.latitude.blank? }
 
   def positive_reports_count
     reports.select { |r| r.status == "positive" }.size
@@ -12,7 +12,7 @@ class Place < ApplicationRecord
   def negative_reports_count
     reports.select { |r| r.status == "negative" }.size
   end
-  
+
   def reports_count
     positive_reports_count + negative_reports_count
   end
