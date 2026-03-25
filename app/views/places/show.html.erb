@@ -232,7 +232,7 @@
             <% else %>
               <div class="place-signin-card">
                 <p><%= portuguese ? "Faça login para compartilhar um relato e contribuir com o mapa da comunidade." : "Sign in to share a report and contribute to the community map." %></p>
-                <%= link_to (portuguese ? "Entrar para contribuir" : "Sign in to contribute"), new_user_session_path, class: "place-submit-button" %>
+                <%= link_to (portuguese ? "Entrar para contribuir" : "Sign in to contribute"), new_user_session_path(return_to: request.fullpath), class: "place-submit-button" %>
               </div>
             <% end %>
           </div>

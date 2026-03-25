@@ -10,7 +10,7 @@ class ReportsController < ApplicationController
     @report.user = current_user
 
     if @report.save
-      redirect_to place_path(@place), notice: "Report created."
+      redirect_to place_path(@place), notice: (I18n.locale == :"pt-BR" ? "Relato enviado com sucesso!" : "Report created.")
     else
       @reports = @place.reports
       render "places/show", status: :unprocessable_entity
@@ -33,7 +33,7 @@ class ReportsController < ApplicationController
   def destroy
     @place = @report.place
     @report.destroy
-    redirect_to place_path(@place), notice: "Review removida"
+    redirect_to place_path(@place), notice: (I18n.locale == :"pt-BR" ? "Relato removido com sucesso!" : "Report deleted.")
   end
 
   private
