@@ -1,7 +1,6 @@
 pt-BR:
   nav:
     home: "Início"
-
   auth:
     shared:
       eyebrow: "Acesso à conta"
@@ -31,7 +30,6 @@ pt-BR:
       forgot_password: "Esqueceu sua senha?"
       confirmation: "Não recebeu as instruções de confirmação?"
       unlock: "Não recebeu as instruções de desbloqueio?"
-
   home:
     hero:
       badge: "Segurança local com apoio da comunidade"
@@ -61,12 +59,10 @@ pt-BR:
           statuses: "status fáceis de entender"
           access: "acesso quando precisar"
           community: "informação baseada na comunidade"
-
     trust:
       safety: "Informação orientada à segurança"
       location: "Busca por lugar ou endereço"
       community: "Construído com a comunidade"
-
     how_it_works:
       eyebrow: "Como funciona"
       title: "Uma forma mais clara de verificar um lugar antes de sair"
@@ -81,7 +77,6 @@ pt-BR:
         report:
           title: "Compartilhe o que mudou"
           text: "Envie um relato para ajudar outras pessoas tomarem uma melhor decisão depois."
-
     value:
       eyebrow: "Por que importa"
       title: "Menos achismo, mais contexto útil"
@@ -96,13 +91,11 @@ pt-BR:
         shared:
           title: "Melhora com a comunidade"
           text: "Quanto mais pessoas contribuem, mais útil a plataforma fica."
-
     bottom_cta:
       eyebrow: "Comece agora"
       title: "Verifique o lugar antes de sair"
       subtitle: "Use a busca para explorar locais e revisar o que as pessoas estão reportando."
       primary: "Buscar lugares"
-
   devise:
     common:
       not_found: "Não encontrado"
@@ -123,3 +116,15 @@ pt-BR:
     confirmations:
       send_instructions: "Você receberá um e-mail com instruções sobre como confirmar sua conta em alguns minutos."
       confirmed: "Sua conta foi confirmada com sucesso."
+
+  activerecord:
+    attributes:
+      report:
+        description: "O relato"
+    errors:
+      models:
+        report:
+          attributes:
+            description:
+              blank: "não pode ficar em branco"
+              too_short: "está muito curto (mínimo de %{count} caracteres)"

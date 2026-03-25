@@ -1,40 +1,45 @@
 <% query = params[:query].to_s.strip %>
 <% portuguese = I18n.locale.to_s == "pt-BR" %>
+
 <% back_label =
-     if query.present?
-       portuguese ? "← Voltar aos resultados" : "← Back to results"
-     else
-       portuguese ? "← Voltar para o mapa" : "← Back to map"
-     end %>
+      if query.present?
+        portuguese ? "← Voltar aos resultados" : "← Back to results"
+      else
+        portuguese ? "← Voltar para o mapa" : "← Back to map"
+      end %>
+
 <% category_options =
-     if portuguese
-       ["Ambiente", "Segurança", "Preconceito", "Assédio", "Violência", "Outros"]
-     else
-       ["Environment", "Safety", "Discrimination", "Harassment", "Violence", "Other"]
-     end %>
+      if portuguese
+        ["Ambiente", "Segurança", "Preconceito", "Assédio", "Violência", "Outros"]
+      else
+        ["Environment", "Safety", "Discrimination", "Harassment", "Violence", "Other"]
+      end %>
+
 <% status_options =
-     if portuguese
-       [["Positivo", "positive"], ["Negativo", "negative"]]
-     else
-       [["Positive", "positive"], ["Negative", "negative"]]
-     end %>
+      if portuguese
+        [["Positivo", "positive"], ["Negativo", "negative"]]
+      else
+        [["Positive", "positive"], ["Negative", "negative"]]
+      end %>
+
 <% status_key = @place.status %>
 <% status_label =
-     case status_key
-     when "positive" then (portuguese ? "Seguro" : "Safe")
-     when "negative" then (portuguese ? "Evitar" : "Avoid")
-     else
-       portuguese ? "Atenção" : "Attention"
-     end %>
+      case status_key
+      when "positive" then (portuguese ? "Seguro" : "Safe")
+      when "negative" then (portuguese ? "Evitar" : "Avoid")
+      else
+        portuguese ? "Atenção" : "Attention"
+      end %>
+
 <% positive_count = @reports.count { |report| report.status == "positive" } %>
 <% negative_count = @reports.count { |report| report.status == "negative" } %>
 <% latest_report = @reports.max_by(&:created_at) %>
 <% latest_report_label =
-     if latest_report.present?
-       portuguese ? latest_report.created_at.strftime("%d/%m/%Y") : latest_report.created_at.strftime("%b %d, %Y")
-     else
-       "—"
-     end %>
+      if latest_report.present?
+        portuguese ? latest_report.created_at.strftime("%d/%m/%Y") : latest_report.created_at.strftime("%b %d, %Y")
+      else
+        "—"
+      end %>
 
 <div class="place-detail-page">
   <div class="container">
@@ -138,11 +143,11 @@
               <div class="place-reports-list">
                 <% @reports.order(created_at: :desc).each do |report| %>
                   <% report_status_label =
-                       if report.status == "positive"
-                         portuguese ? "Positivo" : "Positive"
-                       else
-                         portuguese ? "Negativo" : "Negative"
-                       end %>
+                        if report.status == "positive"
+                          portuguese ? "Positivo" : "Positive"
+                        else
+                          portuguese ? "Negativo" : "Negative"
+                        end %>
                   <% report_time_label = portuguese ? report.created_at.strftime("%d/%m/%Y • %H:%M") : report.created_at.strftime("%b %d, %Y • %H:%M") %>
 
                   <article class="report-card report-card--<%= report.status %>">
@@ -188,23 +193,16 @@
 
             <% if user_signed_in? %>
               <%= form_with model: [@place, @report], local: true, class: "place-report-form-simple" do |f| %>
+
                 <% if @report.errors.any? %>
                   <div class="place-form-errors">
-                    <p><strong><%= portuguese ? "Não foi possível enviar seu relato." : "We couldn't submit your report." %></strong></p>
-                    <p><%= @report.errors.full_messages.to_sentence %></p>
+                    <p><strong><%= portuguese ? "Não foi possível enviar seu relato:" : "We couldn't submit your report:" %></strong></p>
+                    <ul style="list-style: none; padding: 0; margin-bottom: 15px;">
+                      <% @report.errors.full_messages.each do |message| %>
+                        <li style="color: #b02a37; font-size: 0.9rem;">• <%= message %></li>
+                      <% end %>
+                    </ul>
                   </div>
-
-                  <div class="place-form-group">
-                    <%= f.label :status, (portuguese ? "Tipo do relato" : "Report type") %>
-                    <%= f.select :status, status_options, {}, class: "place-form-control" %>
-                  </div>
-
-                  <div class="place-form-group">
-                    <%= f.label :description, (portuguese ? "Descrição" : "Description") %>
-                    <%= f.text_area :description, class: "place-form-control place-form-control--textarea", rows: 5, placeholder: (portuguese ? "Descreva o que você percebeu neste local." : "Describe what you noticed about this place.") %>
-                  </div>
-
-                  <%= f.submit(portuguese ? "Enviar relato" : "Submit report", class: "place-submit-button") %>
                 <% end %>
 
                 <div class="place-form-group">
@@ -222,7 +220,7 @@
                   <%= f.text_area :description,
                         rows: 6,
                         class: "place-form-control place-form-control--textarea",
-                        placeholder: (portuguese ? "Descreva o que você percebeu neste local." : "Describe what you noticed in this place.") %>
+                        placeholder: (portuguese ? "Descreva o que você percebeu neste local (mínimo de 50 caracteres)." : "Describe what you noticed in this place.") %>
                 </div>
 
                 <%= f.submit (portuguese ? "Enviar relato" : "Send report"), class: "place-submit-button" %>
