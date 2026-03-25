@@ -33,14 +33,22 @@ export default class extends Controller {
       return { placeId: marker.id, marker: mapMarker }
     })
 
-    // Centraliza no lugar buscado via home (lat/lng na URL)
+    // Centraliza no lugar buscado via home (lat/lng na URL) ou ao voltar de um lugar
     const params = new URLSearchParams(window.location.search)
     const lat = parseFloat(params.get("lat"))
     const lng = parseFloat(params.get("lng"))
+    const focusPlaceId = params.get("place_id")
     if (!isNaN(lat) && !isNaN(lng)) {
       this.map.once("load", () => {
         this.map.flyTo({ center: [lng, lat], zoom: 15, speed: 1.5 })
-        new mapboxgl.Marker({ color: "#3b82f6" }).setLngLat([lng, lat]).addTo(this.map)
+        if (focusPlaceId) {
+          this.map.once("moveend", () => {
+            const target = this.markers.find(m => String(m.placeId) === String(focusPlaceId))
+            if (target) target.marker.getPopup().addTo(this.map)
+          })
+        } else {
+          new mapboxgl.Marker({ color: "#3b82f6" }).setLngLat([lng, lat]).addTo(this.map)
+        }
       })
     }
 
