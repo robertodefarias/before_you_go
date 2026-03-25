@@ -46,7 +46,11 @@
     <div class="place-detail-shell">
       <%= link_to(
             back_label,
-            query.present? ? places_path(query: query) : places_path,
+            if query.present?
+              places_path(query: query, place_id: @place.id, lat: @place.latitude, lng: @place.longitude)
+            else
+              places_path(place_id: @place.id, lat: @place.latitude, lng: @place.longitude)
+            end,
             class: "place-detail-back"
           ) %>
 
