@@ -84,8 +84,8 @@ export default class extends Controller {
   renderMap({ lng, lat, zoom }) {
     if (!this.hasMapTarget || !this.mapboxToken) return
 
-    const width = 1280
-    const height = 900
+    const width = Math.max(Math.round(this.mapTarget.clientWidth || 1280), 1)
+    const height = Math.max(Math.round(this.mapTarget.clientHeight || 900), 1)
     const viewport = this.userLocation
       ? this.staticViewportForPin({ lng, lat, zoom }, width, height)
       : { lng, lat, zoom }
