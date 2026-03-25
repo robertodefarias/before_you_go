@@ -35,9 +35,11 @@ export default class extends Controller {
       this.map.once("load", () => {
         this.map.flyTo({ center: [lng, lat], zoom: 15, speed: 1.5 })
 
-        this.tempMarker = new mapboxgl.Marker({ color: "#3b82f6" })
-          .setLngLat([lng, lat])
-          .addTo(this.map)
+        if (!isNaN(lat) && !isNaN(lng)) {
+          this.map.once("load", () => {
+            this.map.flyTo({ center: [lng, lat], zoom: 15, speed: 1.5 })
+          })
+        }
       })
     }
 

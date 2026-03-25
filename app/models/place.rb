@@ -6,13 +6,13 @@ class Place < ApplicationRecord
   after_validation :geocode, if: :address_changed?
 
   def positive_reports_count
-    reports.where(status: "positive").count
+    reports.select { |r| r.status == "positive" }.size
   end
 
   def negative_reports_count
-    reports.where(status: "negative").count
+    reports.select { |r| r.status == "negative" }.size
   end
-
+  
   def reports_count
     positive_reports_count + negative_reports_count
   end
@@ -66,4 +66,5 @@ class Place < ApplicationRecord
       "gray"
     end
   end
+
 end

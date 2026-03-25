@@ -109,9 +109,6 @@ export default class extends Controller {
       })
       .then(data => {
         const feature = data.features?.[0]
-        if (!feature) return
-
-        const [lng, lat] = feature.geometry.coordinates
         const fullName = suggestion.place_formatted
           ? `${suggestion.name} — ${suggestion.place_formatted}`
           : suggestion.name
@@ -121,19 +118,27 @@ export default class extends Controller {
         this.setState("idle")
         this.sessionToken = this.generateSessionToken()
 
+        const locale = document.documentElement.lang || ""
+        const prefix = locale ? `/${locale}` : ""
+
+        if (!feature) {
+          window.location.href = `${prefix}/places`
+          return
+        }
+
+        const [lng, lat] = feature.geometry.coordinates
         const mapEl = document.querySelector('[data-controller~="map"]')
 
         if (mapEl) {
           this.dispatch("placeSelected", { detail: { lat, lng, name: fullName } })
         } else {
-          const locale = document.documentElement.lang || ""
-          const prefix = locale ? `/${locale}` : ""
           window.location.href = `${prefix}/places?lat=${lat}&lng=${lng}`
         }
       })
       .catch(() => {
-        this.renderMessage(this.localeText("error"))
-        this.setState("error")
+        const locale = document.documentElement.lang || ""
+        const prefix = locale ? `/${locale}` : ""
+        window.location.href = `${prefix}/places`
       })
   }
 
