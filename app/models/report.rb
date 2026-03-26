@@ -37,6 +37,6 @@ class Report < ApplicationRecord
   private
 
   def enqueue_translation
-    TranslateReportJob.perform_later(id)
+    TranslateReportJob.perform_now(id)
   end
 end
