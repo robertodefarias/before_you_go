@@ -59,10 +59,11 @@ en:
         overline: "Quick read"
         title: "Three clear statuses for faster decisions"
         text: "Before You Go turns recent community reports into a simpler signal, so you can quickly understand whether a place feels safe, uncertain, or risky."
-        metrics:
-          statuses: "easy-to-read statuses"
-          access: "access whenever you need it"
-          community: "community-based information"
+        legend:
+          safe: "Safe"
+          safer: "Safer than dangerous"
+          user_location: "Your location"
+          danger: "Danger avoid"
 
     trust:
       safety: "Safety-oriented information"

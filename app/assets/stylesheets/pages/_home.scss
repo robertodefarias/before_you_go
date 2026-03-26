@@ -75,7 +75,7 @@
   display: grid;
   grid-template-columns: minmax(0, 470px) minmax(240px, 312px);
   gap: 16px;
-  align-items: start;
+  align-items: center;
   justify-content: space-between;
   padding: 16px;
 }
@@ -311,7 +311,7 @@
 .hero-panel {
   position: relative;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
   min-height: auto;
 }
@@ -438,7 +438,7 @@
   transition: opacity 0.35s ease, transform 0.45s ease, box-shadow 0.28s ease;
   transform: translateY(0);
   backdrop-filter: blur(14px);
-  align-self: flex-start;
+  align-self: center;
 }
 
 .hero-panel-card::before {
@@ -554,7 +554,7 @@
 }
 
 .panel-metric--user {
-  border-color: rgba(156, 163, 175, 0.42);
+  border-color: rgba(236, 158, 24, 0.36);
 }
 
 .panel-metric--danger {
@@ -569,27 +569,13 @@
   min-height: 76px;
 }
 
-.panel-metric--safer {
-  justify-content: center;
-}
-
-.panel-metric-text {
+.panel-metric-label {
   display: block;
-  font-size: 0.7rem;
-  line-height: 1.18;
-  font-weight: 500;
-  color: #284266;
+  font-size: 0.78rem;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #1c3157;
   text-align: left;
-}
-
-.panel-metric-text--safer {
-  font-size: 0.68rem;
-  line-height: 1.14;
-}
-
-.panel-metric-text .legend-line {
-  display: block;
-  white-space: nowrap;
 }
 
 .panel-pin {
@@ -624,7 +610,7 @@
 }
 
 .panel-pin-user {
-  background: linear-gradient(180deg, #cfd5df 0%, #9ca3af 100%);
+  background: linear-gradient(180deg, #f7c64d 0%, #ec9e18 100%);
 }
 
 .panel-pin-danger {

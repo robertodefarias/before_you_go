@@ -55,10 +55,11 @@ pt-BR:
         overline: "Leitura rápida"
         title: "Três status claros para decidir mais rápido"
         text: "O Before You Go transforma relatos recentes da comunidade em um sinal mais simples, para você entender rapidamente se um lugar parece seguro, incerto ou arriscado."
-        metrics:
-          statuses: "status fáceis de entender"
-          access: "acesso quando precisar"
-          community: "informação baseada na comunidade"
+        legend:
+          safe: "Seguro"
+          safer: "Mais seguro que perigoso"
+          user_location: "Sua localização"
+          danger: "Perigoso evitar"
     trust:
       safety: "Informação orientada à segurança"
       location: "Busca por lugar ou endereço"
