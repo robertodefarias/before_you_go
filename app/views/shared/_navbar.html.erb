@@ -26,10 +26,11 @@
 
           <div class="navbar-dropdown">
             <span class="navbar-link navbar-link-outline">
-              <%= current_user.email %>
+              <%= current_user.display_name %>
             </span>
 
             <div class="dropdown-menu-custom">
+              <%= link_to "Reviews", root_path(locale: I18n.locale, open_reviews: "1"), class: "dropdown-item-custom" %>
               <%= link_to "Logout",
                 destroy_user_session_path,
                 data: { turbo_method: :delete },

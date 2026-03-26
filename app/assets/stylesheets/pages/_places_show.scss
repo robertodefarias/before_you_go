@@ -326,10 +326,63 @@
   color: #bf4747;
 }
 
-.report-time,
+.report-card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.report-time {
+  font-size: 0.82rem;
+  color: #9aaabf;
+}
+
 .report-author {
   font-size: 0.9rem;
   color: #76849f;
+}
+
+.report-action-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.report-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.18s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+.report-action-btn--edit {
+  background: rgba(62, 108, 255, 0.08);
+  border: 1px solid rgba(62, 108, 255, 0.22);
+  color: #3256d8;
+
+  &:hover {
+    background: rgba(62, 108, 255, 0.14);
+  }
+}
+
+.report-action-btn--delete {
+  background: rgba(238, 98, 98, 0.08);
+  border: 1px solid rgba(238, 98, 98, 0.22);
+  color: #bf4747;
+
+  &:hover {
+    background: rgba(238, 98, 98, 0.14);
+  }
 }
 
 .report-description {

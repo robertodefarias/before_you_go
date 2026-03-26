@@ -38,6 +38,11 @@ pt-BR:
       search_helper: "Comece por um lugar, estabelecimento ou endereço para ver o que a comunidade está reportando."
       primary_cta: "Explorar lugares"
       secondary_cta: "Como funciona"
+      my_reviews_btn: "Minhas Reviews"
+      back_btn: "Voltar"
+      reviews_empty: "Você ainda não tem relatos."
+      reviews_login: "Faça login para ver suas reviews"
+      view_place: "Ver local →"
       stats:
         community:
           title: "Visão da comunidade"
@@ -136,3 +141,8 @@ pt-BR:
             description:
               blank: "não pode ficar em branco"
               too_short: "está muito curto (mínimo de %{count} caracteres)"
+
+  reports:
+    status:
+      positive: "Positivo"
+      negative: "Negativo"
