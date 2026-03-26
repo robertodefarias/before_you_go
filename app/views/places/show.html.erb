@@ -217,19 +217,21 @@
                       <div class="report-card-actions">
                         <span class="report-time"><%= report_time_label %></span>
                         <% if user_signed_in? && report.user == current_user %>
-                          <%= link_to(portuguese ? "Editar" : "Edit",
-                                edit_place_report_path(@place, report),
-                                class: "report-action-btn report-action-btn--edit") %>
-                          <%= link_to(portuguese ? "Remover" : "Delete",
-                                place_report_path(@place, report),
-                                data: { turbo_method: :delete, turbo_confirm: portuguese ? "Tem certeza?" : "Are you sure?" },
-                                class: "report-action-btn report-action-btn--delete") %>
+                          <div class="report-action-btns">
+                            <%= link_to(portuguese ? "Editar" : "Edit",
+                                  edit_place_report_path(@place, report),
+                                  class: "report-action-btn report-action-btn--edit") %>
+                            <%= link_to(portuguese ? "Remover" : "Delete",
+                                  place_report_path(@place, report),
+                                  data: { turbo_method: :delete, turbo_confirm: portuguese ? "Tem certeza?" : "Are you sure?" },
+                                  class: "report-action-btn report-action-btn--delete") %>
+                          </div>
                         <% end %>
                       </div>
                     </div>
 
                     <p class="report-description"><%= report.description %></p>
-                    <p class="report-author"><%= report.user.first_name.presence || report.user.email.split("@").first %></p>
+                    <p class="report-author"><%= report.user.display_name %></p>
                   </article>
                 <% end %>
               </div>
