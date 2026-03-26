@@ -5,7 +5,12 @@ class TranslateReportJob < ApplicationJob
     report = Report.find_by(id: report_id)
     return unless report&.description.present?
 
-    key = ENV.fetch("DEEPL_API_KEY")
+    key = ENV["DEEPL_API_KEY"]
+    unless key.present?
+      Rails.logger.error("[TranslateReportJob] DEEPL_API_KEY not set — skipping translation for report #{report_id}")
+      return
+    end
+
     DeepL.configure do |config|
       config.auth_key = key
       config.host = key.end_with?(":fx") ? "https://api-free.deepl.com" : "https://api.deepl.com"
@@ -18,5 +23,7 @@ class TranslateReportJob < ApplicationJob
       description_en: translation_en.text,
       description_pt_br: translation_pt.text
     )
+  rescue => e
+    Rails.logger.error("[TranslateReportJob] Translation failed for report #{report_id}: #{e.message}")
   end
 end
