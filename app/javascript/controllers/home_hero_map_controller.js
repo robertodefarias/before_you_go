@@ -8,13 +8,21 @@ export default class extends Controller {
     this.focusCenter = { lng: -47.93, lat: -15.78, zoom: 5 }
     this.typingTimer = null
     this.userLocation = null
+    this.map = null
+    this.pendingImage = null
+    this.lastViewport = null
+    this.handleResize = this.handleResize.bind(this)
 
     this.renderMap(this.defaultCenter)
     this.locateUser()
+    window.addEventListener("resize", this.handleResize)
   }
 
   disconnect() {
     clearTimeout(this.typingTimer)
+    window.removeEventListener("resize", this.handleResize)
+    this.pendingImage = null
+    this.destroyInteractiveMap()
   }
 
   locateUser() {
@@ -90,8 +98,14 @@ export default class extends Controller {
       ? this.staticViewportForPin({ lng, lat, zoom }, width, height)
       : { lng, lat, zoom }
     const center = `${viewport.lng},${viewport.lat},${viewport.zoom},0`
+    this.lastViewport = viewport
 
-    this.mapTarget.style.backgroundImage = `url("${this.staticMapUrl(center, width, height)}")`
+    if (this.map) {
+      this.map.easeTo({ center: [viewport.lng, viewport.lat], zoom: viewport.zoom, duration: 500 })
+      return
+    }
+
+    this.loadStaticMap(this.staticMapUrl(center, width, height), viewport)
   }
 
   userViewport(focused) {
@@ -149,6 +163,61 @@ export default class extends Controller {
     if (!this.hasUserPinTarget) return
 
     this.userPinTarget.hidden = false
+  }
+
+  handleResize() {
+    if (this.map) {
+      this.map.resize()
+    }
+
+    if (this.lastViewport) {
+      this.renderMap(this.lastViewport)
+    }
+  }
+
+  loadStaticMap(url, viewport) {
+    const image = new Image()
+    this.pendingImage = image
+
+    image.onload = () => {
+      if (this.pendingImage !== image || this.map) return
+      this.mapTarget.style.backgroundImage = `url("${url}")`
+    }
+
+    image.onerror = () => {
+      if (this.pendingImage !== image) return
+      this.initializeInteractiveMap(viewport)
+    }
+
+    image.src = url
+  }
+
+  initializeInteractiveMap(viewport) {
+    if (this.map || typeof mapboxgl === "undefined") return
+
+    mapboxgl.accessToken = this.mapboxToken
+    this.mapTarget.style.backgroundImage = "none"
+    this.mapTarget.classList.add("hero-live-map--interactive")
+
+    this.map = new mapboxgl.Map({
+      container: this.mapTarget,
+      style: "mapbox://styles/mapbox/streets-v12",
+      center: [viewport.lng, viewport.lat],
+      zoom: viewport.zoom,
+      attributionControl: false
+    })
+
+    this.map.scrollZoom.disable()
+    this.map.dragRotate.disable()
+    this.map.touchZoomRotate.disableRotation()
+  }
+
+  destroyInteractiveMap() {
+    if (!this.map) return
+
+    this.map.remove()
+    this.map = null
+    this.mapTarget.classList.remove("hero-live-map--interactive")
   }
 
   staticMapUrl(center, width, height) {
