@@ -90,6 +90,50 @@
   color: #61708c;
 }
 
+.place-hero-actions {
+  margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.place-directions-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 18px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #3e6cff 0%, #5b86ff 100%);
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 16px 28px rgba(62, 108, 255, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  border: 0;
+  cursor: pointer;
+}
+
+.place-directions-link:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 20px 32px rgba(62, 108, 255, 0.22);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.place-directions-link--secondary {
+  background: linear-gradient(135deg, #3e6cff 0%, #5b86ff 100%);
+  color: #ffffff;
+  border: 0;
+  box-shadow: 0 16px 28px rgba(62, 108, 255, 0.18);
+}
+
+.place-directions-link--secondary:hover {
+  color: #ffffff;
+  box-shadow: 0 20px 32px rgba(62, 108, 255, 0.22);
+}
+
 .place-status-badge {
   display: inline-flex;
   align-items: center;

@@ -40,7 +40,6 @@
       else
         "—"
       end %>
-
 <div class="place-detail-page">
   <div class="container">
     <div class="place-detail-shell">
@@ -71,6 +70,22 @@
                   "Review the current read of this place, recent community reports, and add fresh context when needed."
                 end %>
           </p>
+
+          <% if @place.address.present? %>
+            <div class="place-hero-actions">
+              <button
+                type="button"
+                class="place-directions-link place-directions-link--secondary"
+                data-controller="clipboard"
+                data-clipboard-text-value="<%= @place.address %>"
+                data-clipboard-success-value="<%= portuguese ? "Endereço copiado" : "Address copied" %>"
+                data-clipboard-default-label-value="<%= portuguese ? "Copiar endereço" : "Copy address" %>"
+                data-action="click->clipboard#copy"
+              >
+                <span data-clipboard-target="label"><%= portuguese ? "Copiar endereço" : "Copy address" %></span>
+              </button>
+            </div>
+          <% end %>
         </div>
 
         <div class="place-hero-metrics">
