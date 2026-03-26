@@ -14,7 +14,7 @@
 
         <div class="hero-shell">
           <div class="hero-content flip-card">
-            <div class="flip-card-inner" data-controller="flip">
+            <div class="flip-card-inner" data-controller="flip" data-flip-open-value="<%= params[:open_reviews] == '1' %>">
               <!-- 🔵 FRENTE -->
               <div class="flip-card-front">
                 <div class="flip-card-front-header">
@@ -23,7 +23,7 @@
                   </div>
                   <% if user_signed_in? %>
                     <button class="btn-minhas-reviews" data-action="click->flip#toggle">
-                      Minhas Reviews
+                      <%= t("home.hero.my_reviews_btn") %>
                     </button>
                   <% end %>
                 </div>
@@ -74,10 +74,10 @@
               <div class="flip-card-back">
                 <div class="flip-card-front-header">
                   <div class="hero-badge">
-                    <span>Minhas Reviews</span>
+                    <span><%= t("home.hero.my_reviews_btn") %></span>
                   </div>
                   <button class="btn-minhas-reviews" data-action="click->flip#toggle">
-                    Voltar
+                    <%= t("home.hero.back_btn") %>
                   </button>
                 </div>
 
@@ -91,19 +91,19 @@
                           <div class="user-report-header">
                             <strong class="user-report-place"><%= report.place.name %></strong>
                             <span class="user-report-status user-report-status--<%= report.status %>">
-                              <%= report.status == "positive" ? "Positivo" : "Negativo" %>
+                              <%= t("reports.status.#{report.status}") %>
                             </span>
                           </div>
                           <p class="user-report-description"><%= report.description.truncate(80) %></p>
-                          <%= link_to "Ver local →", place_path(report.place), class: "user-report-link" %>
+                          <%= link_to t("home.hero.view_place"), place_path(report.place), class: "user-report-link" %>
                         </div>
                       <% end %>
                     </div>
                   <% else %>
-                    <p>Você ainda não tem relatos.</p>
+                    <p><%= t("home.hero.reviews_empty") %></p>
                   <% end %>
                 <% else %>
-                  <p>Faça login para ver suas reviews</p>
+                  <p><%= t("home.hero.reviews_login") %></p>
                 <% end %>
               </div>
             </div>

@@ -13,28 +13,39 @@ export default class extends Controller {
     this.lastViewport = null
     this.handleResize = this.handleResize.bind(this)
 
-    this.renderMap(this.defaultCenter)
     this.locateUser()
     window.addEventListener("resize", this.handleResize)
   }
 
   disconnect() {
     clearTimeout(this.typingTimer)
+    clearTimeout(this.geoFallbackTimer)
     window.removeEventListener("resize", this.handleResize)
     this.pendingImage = null
     this.destroyInteractiveMap()
   }
 
   locateUser() {
-    if (!navigator.geolocation) return
+    if (!navigator.geolocation) {
+      this.renderMap(this.defaultCenter)
+      return
+    }
+
+    this.geoFallbackTimer = setTimeout(() => {
+      if (!this.userLocation) this.renderMap(this.defaultCenter)
+    }, 2000)
 
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
+        clearTimeout(this.geoFallbackTimer)
         this.userLocation = { lng: coords.longitude, lat: coords.latitude }
         this.showUserPin()
         this.renderMap(this.userViewport(false))
       },
-      () => {},
+      () => {
+        clearTimeout(this.geoFallbackTimer)
+        if (!this.userLocation) this.renderMap(this.defaultCenter)
+      },
       {
         enableHighAccuracy: true,
         timeout: 10000,

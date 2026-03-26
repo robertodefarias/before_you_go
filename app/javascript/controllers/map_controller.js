@@ -7,6 +7,7 @@ export default class extends Controller {
     mapboxgl.accessToken = this.element.dataset.mapboxKey
 
     const markers = JSON.parse(this.element.dataset.markers || "[]")
+    this.activePopup = null
 
     const params = new URLSearchParams(window.location.search)
     const lat = parseFloat(params.get("lat"))
@@ -85,16 +86,24 @@ export default class extends Controller {
     const lng = parseFloat(event.currentTarget.dataset.lng)
     const placeId = event.currentTarget.dataset.placeId
 
+    if (this.activePopup) {
+      this.activePopup.remove()
+      this.activePopup = null
+    }
+
     this.map.flyTo({
       center: [lng, lat],
       zoom: 15,
-      speed: 1.5
+      speed: 1.5,
+      padding: { top: 180, bottom: 40, left: 40, right: 40 }
     })
 
     this.map.once("moveend", () => {
-      const markerPopup = this.markers.find((m) => m.placeId == placeId)
-      if (markerPopup && markerPopup.marker.getPopup()) {
-        markerPopup.marker.getPopup().addTo(this.map)
+      const markerEntry = this.markers.find((m) => m.placeId == placeId)
+      if (markerEntry && markerEntry.marker.getPopup()) {
+        const popup = markerEntry.marker.getPopup()
+        popup.addTo(this.map)
+        this.activePopup = popup
       }
     })
   }
@@ -112,9 +121,14 @@ export default class extends Controller {
     )
 
     if (nameMatch && nameMatch.marker.getPopup()) {
+      if (this.activePopup) { this.activePopup.remove(); this.activePopup = null }
       const pos = nameMatch.marker.getLngLat()
-      this.map.flyTo({ center: [pos.lng, pos.lat], zoom: 15, speed: 1.5 })
-      this.map.once("moveend", () => nameMatch.marker.getPopup().addTo(this.map))
+      this.map.flyTo({ center: [pos.lng, pos.lat], zoom: 15, speed: 1.5, padding: { top: 180, bottom: 40, left: 40, right: 40 } })
+      this.map.once("moveend", () => {
+        const popup = nameMatch.marker.getPopup()
+        popup.addTo(this.map)
+        this.activePopup = popup
+      })
       return
     }
 
@@ -133,7 +147,10 @@ export default class extends Controller {
       })
 
       if (existingMarker && existingMarker.marker.getPopup()) {
-        existingMarker.marker.getPopup().addTo(this.map)
+        if (this.activePopup) { this.activePopup.remove(); this.activePopup = null }
+        const popup = existingMarker.marker.getPopup()
+        popup.addTo(this.map)
+        this.activePopup = popup
         return
       }
 

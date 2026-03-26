@@ -42,6 +42,11 @@ en:
       search_helper: "Start with a place, venue, or address to see what the community is reporting."
       primary_cta: "Explore places"
       secondary_cta: "How it works"
+      my_reviews_btn: "My Reviews"
+      back_btn: "Back"
+      reviews_empty: "You don't have any reports yet."
+      reviews_login: "Log in to see your reviews"
+      view_place: "View place →"
       stats:
         community:
           title: "Community insights"
@@ -118,3 +123,8 @@ en:
         email: "Email"
         password: "Password"
         password_confirmation: "Confirm password"
+
+  reports:
+    status:
+      positive: "Positive"
+      negative: "Negative"
