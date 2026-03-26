@@ -24,15 +24,7 @@
 
 <% latest_report = place.reports.last %>
 
-<% latest_report_text =
-     if latest_report.present?
-       latest_report.try(:description).presence ||
-       latest_report.try(:comment).presence ||
-       latest_report.try(:details).presence ||
-       latest_report.try(:body).presence ||
-       latest_report.try(:message).presence ||
-       latest_report.try(:summary).presence
-     end %>
+<% latest_report_text = latest_report&.translated_description %>
 
 <div class="map-popup-card">
   <div class="map-popup-status <%= status_class %>"></div>

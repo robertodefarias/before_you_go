@@ -134,3 +134,11 @@ en:
     status:
       positive: "Positive"
       negative: "Negative"
+    categories:
+      ambiente: "Environment"
+      seguranca: "Safety"
+      preconceito: "Discrimination"
+      assedio: "Harassment"
+      violencia: "Violence"
+      outros: "Other"
+      geral: "General"

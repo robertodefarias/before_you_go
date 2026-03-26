@@ -211,7 +211,7 @@
                   <article class="report-card report-card--<%= report.status %>">
                     <div class="report-card-top">
                       <div class="report-card-meta">
-                        <span class="report-category"><%= report.category %></span>
+                        <span class="report-category"><%= report.translated_category %></span>
                         <span class="report-status report-status--<%= report.status %>"><%= report_status_label %></span>
                       </div>
                       <div class="report-card-actions">
@@ -230,7 +230,7 @@
                       </div>
                     </div>
 
-                    <p class="report-description"><%= report.description %></p>
+                    <p class="report-description"><%= report.translated_description %></p>
                     <p class="report-author"><%= report.user.display_name %></p>
                   </article>
                 <% end %>
@@ -258,7 +258,7 @@
                   <div class="place-user-report-summary">
                     <div class="place-user-report-row">
                       <span class="place-user-report-key"><%= portuguese ? "Categoria" : "Category" %></span>
-                      <p class="place-user-report-value"><%= @user_report.category.presence || "—" %></p>
+                      <p class="place-user-report-value"><%= @user_report.translated_category.presence || "—" %></p>
                     </div>
 
                     <div class="place-user-report-row">
@@ -277,7 +277,7 @@
 
                     <div class="place-user-report-row place-user-report-row--description">
                       <span class="place-user-report-key"><%= portuguese ? "Descrição" : "Description" %></span>
-                      <p class="place-user-report-description"><%= @user_report.description.presence || "—" %></p>
+                      <p class="place-user-report-description"><%= @user_report.translated_description.presence || "—" %></p>
                     </div>
                   </div>
                 </div>
