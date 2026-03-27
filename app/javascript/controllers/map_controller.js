@@ -27,9 +27,17 @@ export default class extends Controller {
       const popupEl = this.popupTargets.find((el) => el.dataset.placeId == marker.id)
       const markerColor = this.resolveMarkerColor(marker.pin_color)
 
+      const popup = popupEl ? new mapboxgl.Popup().setHTML(popupEl.innerHTML) : null
+      if (popup) {
+        popup.on("open", () => {
+          if (this.activePopup && this.activePopup !== popup) this.activePopup.remove()
+          this.activePopup = popup
+        })
+      }
+
       const mapMarker = new mapboxgl.Marker({ color: markerColor })
         .setLngLat([marker.lng, marker.lat])
-        .setPopup(popupEl ? new mapboxgl.Popup().setHTML(popupEl.innerHTML) : null)
+        .setPopup(popup)
 
       if (hasFocus) mapMarker.addTo(this.map)
 
@@ -262,10 +270,12 @@ export default class extends Controller {
     const lng = event.lngLat.lng
     const lat = event.lngLat.lat
 
-    new mapboxgl.Popup({ closeButton: true, closeOnClick: true, maxWidth: "420px" })
+    this.clearActivePopup()
+    const popup = new mapboxgl.Popup({ closeButton: true, closeOnClick: true, maxWidth: "420px" })
       .setLngLat(event.lngLat)
       .setHTML(this.buildPopupHTML(name, "", lat, lng))
-      .addTo(this.map)
+    popup.addTo(this.map)
+    this.activePopup = popup
   }
 
   addPlace(event) {
