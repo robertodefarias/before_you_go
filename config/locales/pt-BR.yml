@@ -61,7 +61,7 @@ pt-BR:
           text: "Contribua com atualizações quando algo mudar."
       panel:
         positive: "Seguro"
-        neutral: "Intenção"
+        neutral: "Atenção"
         negative: "Evitar"
         overline: "Leitura rápida"
         title: "Três status claros para decidir mais rápido"
