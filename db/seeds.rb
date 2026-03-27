@@ -318,11 +318,16 @@ all_reports = [
 ]
 
 # Filtra só os reports que ainda não existem e faz insert em bloco
-new_reports = all_reports.filter_map do |r|
+# Datas espalhadas ao longo de 2 anos até hoje
+start_date = 2.years.ago
+total = all_reports.length
+
+new_reports = all_reports.each_with_index.filter_map do |r, i|
   pid = place_ids[r[:place]]
   next if pid.nil? || existing_reports.include?([pid, r[:user_id]])
+  report_date = start_date + (i.to_f / total * 730).days + [10, 12, 14, 16, 18, 20, 22, 23][i % 8].hours + (i * 17 % 60).minutes
   { place_id: pid, user_id: r[:user_id], category: r[:cat], status: r[:status],
-    description: r[:desc], created_at: now, updated_at: now }
+    description: r[:desc], created_at: report_date, updated_at: report_date }
 end
 
 Report.insert_all(new_reports) if new_reports.any?
